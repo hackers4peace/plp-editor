@@ -83,9 +83,16 @@ $(function(){
     // Not valid
   }
 
+  remoteStorage.access.claim('shares', 'rw');
+  remoteStorage.displayWidget();
+
   // Listen for changes
   editor.on("change",  function() {
-    // Do something...
+    var data = editor.getValue();
+    remoteStorage.shares.storeFile('application/json-ld', 'me.json', JSON.stringify(data)).then(function(url) {
+      document.getElementById('pushed_to').innerHTML =
+          '<p>Pushed to <a href="'+url+'">'+url+'</a>.</p>';
+    });
   });
 });
 
