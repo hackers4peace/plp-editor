@@ -2,12 +2,22 @@
   "name": "plp-generator",
   "version": "0.0.0",
   "authors": [
-    "elf Pavlik <perpetual-tripper@wwelves.org>"
+    "elf Pavlik <perpetual-tripper@wwelves.org>",
+    "Alex Corbi <alex@open-steps.org>"
   ],
   "license": "Unlicense",
   "private": true,
   "dependencies": {
-    "json-editor": "~0.7.6",
-    "bootstrap": "~3.2.0"
-  }
+    "json-editor": "~0.7.7",
+    "bootstrap": "~3.2.0",
+    "jquery": "~2.1.1"
+  },
+  "homepage": "https://github.com/elf-pavlik/plp-generator",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
 }
