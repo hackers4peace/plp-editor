@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+	<title>PLP Generator</title>
+	
+	<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+
+	<script src="bower_components/jquery/dist/jquery.js"></script>
+	<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+	<script src="bower_components/json-editor/dist/jsoneditor.js"></script>
+	<script src="app.js"></script>
+    
+  </head>
+  
+  <body>
+  
+    <div class="row">
+    
+      	<div class="col-md-4 col-md-offset-1">
+      
+        	<h1>Profile editor</h1>
+        
+      	</div>
+      
+    </div>        	
+	  
+	<div class="row">
+	  
+		<div class="col-md-4 col-md-offset-1">
+		
+			<h1> Here it is!</h1>
+		  	
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam viverra nec consectetur ante hendrerit. Donec et mollis dolor. Praesent et diam eget libero egestas mattis sit amet vitae augue. Nam tincidunt congue enim, ut porta lorem lacinia consectetur.</p>
+			
+			<ul class="nav nav-tabs" role="tablist">
+			  	<li class="active"><a href="#json" role="tab" data-toggle="tab">JSON</a></li>
+			  	<li><a href="#ld" role="tab" data-toggle="tab">LD</a></li>
+			  	<li><a href="#other" role="tab" data-toggle="tab">Other</a></li>
+			</ul>
+			
+			<!-- Tab panes -->
+			<div class="tab-content">
+
+			  	<div class="tab-pane active" id="json">
+			  	
+			  		<textarea class="form-control" rows="10">JSON profile</textarea>
+			  	
+			 	</div>
+			  
+			 	<div class="tab-pane" id="ld">
+			  
+			  		<textarea class="form-control" rows="10">LD profile</textarea>
+			  
+			  	</div>
+			  
+			  	<div class="tab-pane" id="other">
+			  
+			  		<textarea class="form-control" rows="10">other formatst</textarea>
+			  
+			  	</div>
+			  
+			</div>
+									
+		</div>
+		
+		<div class="col-md-4 col-md-offset-1">
+			
+			<h1>You can also download it</h1>
+			
+			<a id="download_btn" href="#" class="btn btn-primary btn-lg">Download profile</a>
+			
+			<h1>Or use the following URL</h1>
+			
+			<input class="form-control" type="text" placeholder="http://ldpc/0EA5&FXCA.json" input>
+		
+		</div>
+		
+	</div>      
+    
+  </body>
+  
+</html>
