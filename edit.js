@@ -9,10 +9,34 @@ $(function(){
       type: "object",
       properties: {
         name: { "type": "string" },
+        additionalname: { "type": "string"},
         description: { "type": "string" },
+         birthDate:  { "type": "string"},
+          nationality : { "type" : "string"},
+        address: {
+          type: "object",
+          properties: {
+            street: { "type": "string"},
+            code: { "type": "string"},
+            city: { "type" : "string"},
+            country: { "type" : "string"}
+          }
+        },
+        telephone: { "type" : "string"},
+        faxNumber: { "type" : "string"},
+        website:  { "type" : "string"},
         image: { "type": "string" },
-        country: { "type": "string" },
-        city: { "type": "string" },
+        workLocation: {
+          title: "company",
+          type: "object",
+          properties: {
+                company: { "type" : "string"},
+                jobtitle: { "type" : "string"},
+                street: { "type" : "string"},
+                code: { "type" : "string"},
+                city:  { "type" : "string"}
+              }
+        },
         contactPoint: {
           type: "array",
           uniqueItems: true,
@@ -30,6 +54,7 @@ $(function(){
             { id: "mailto:" }
           ]
         },
+
         member: {
           type: "array",
           uniqueItems: true,
