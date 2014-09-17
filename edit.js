@@ -82,10 +82,5 @@ $(function(){
   if(errors.length) {
     // Not valid
   }
-
-  // Listen for changes
-  editor.on("change",  function() {
-    // Do something...
-  });
 });
 
