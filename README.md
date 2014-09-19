@@ -22,14 +22,6 @@ They interface with:
  * [ ] update
  * [ ] delete
 
-Types of profiles:
-
-* [ ] Person
-* [ ] Organization
-* [ ] Event
-* [ ] Place
-* [ ] Asset
-
 ## Setup
 
 ```bash
