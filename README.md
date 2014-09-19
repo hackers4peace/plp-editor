@@ -1,5 +1,4 @@
-plp-editor
-============
+# PLP App: Editor
 
 Portable Linked Profile Editor. This repo will host definitions and implementations for Editors working with PLP 
 
