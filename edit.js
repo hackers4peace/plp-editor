@@ -4,6 +4,7 @@ $(function(){
 
   //Initialize the editor
   var editor = new JSONEditor(document.getElementById("editor_holder"),{
+    
     schema: {
       title: "Person",
       type: "object",
@@ -101,11 +102,21 @@ $(function(){
   // Get the value
   var data = editor.getValue();
   console.log(data.name); // "John Smith"
-
   // Validate
   var errors = editor.validate();
   if(errors.length) {
     // Not valid
   }
-});
 
+  $('#generate_btn').click(function() {
+    saveProfile();
+  });
+
+  $( "#target" )
+
+  function saveProfile(){
+    window.localStorage.setItem('profile',editor.getValue());
+    window.location = 'profile.html'
+  }
+
+});

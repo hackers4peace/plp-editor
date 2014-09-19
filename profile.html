@@ -12,6 +12,7 @@
 	<script src="bower_components/jquery/dist/jquery.js"></script>
 	<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
 	<script src="bower_components/json-editor/dist/jsoneditor.js"></script>
+  <!--  <script src="https://raw.githubusercontent.com/visionmedia/superagent/master/superagent.js"></script>-->
   <script src="http://remotestorage.io/release/0.10.1/remotestorage.min.js"></script>
   <script src="https://raw.githubusercontent.com/skddc/sharesome/6521b3e8f2387ac06d4ef9853ee09dbfe5d209d7/vendor/remotestorage/remotestorage-sharesome.js"></script>
 	<script src="config.js"></script>
@@ -38,21 +39,25 @@
 		</div>
 		<div class="col-md-4 col-md-offset-1">
 			<div class="well-lg">
-
+        <h3>If you want to use remote storage, you can use the icon in the top right corner</h3>
 			</div>
 		</div>
 	</div>
 
 	<div class="row">
-		<div class="col-md-10 col-md-offset-4">
+		<div class="col-md-4 col-md-offset-1">
 			<div class="well-lg">
 				<h1>Or You can download it</h1>
 				<a id="download_btn" href="#" class="btn btn-primary btn-lg">Download profile</a>
-				<h4>to upload it to Dropbox, Twitter and so on.</h4>
 			</div>
 		</div>
+    <div class="col-md-4 col-md-offset-1">
+      <div class="well-lg">
+        <a id="publish_btn" href="#" class="btn btn-primary btn-lg">Upload profile to provider</a>
+
+        <div id='profile_output'></div>
+      </div>
+    </div>
 	</div>
-
   </body>
-
 </html>
