@@ -4,7 +4,7 @@ $(function(){
 
   //Initialize the editor
   var editor = new JSONEditor(document.getElementById("editor_holder"),{
-    
+
     schema: {
       title: "Person",
       type: "object",
@@ -112,11 +112,9 @@ $(function(){
     saveProfile();
   });
 
-  $( "#target" )
-
   function saveProfile(){
-    window.localStorage.setItem('profile',editor.getValue());
-    window.location = 'profile.html'
+    window.localStorage.setItem('profile',JSON.stringify(editor.getValue()));
+    window.location = 'profile.html';
   }
 
 });

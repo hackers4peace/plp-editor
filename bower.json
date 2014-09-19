@@ -1,6 +1,10 @@
 {
-  "name": "plp-generator",
+  "name": "plp-editor",
   "version": "0.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hackers4peace/plp-editor"
+  },
   "authors": [
     "elf Pavlik <perpetual-tripper@wwelves.org>",
     "Alex Corbi <alex@open-steps.org>"
@@ -10,7 +14,8 @@
   "dependencies": {
     "json-editor": "~0.7.7",
     "bootstrap": "~3.2.0",
-    "jquery": "~2.1.1"
+    "jquery": "~2.1.1",
+    "superagent": "~0.18.2"
   },
   "homepage": "https://github.com/elf-pavlik/plp-generator",
   "ignore": [
