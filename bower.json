@@ -15,7 +15,8 @@
     "json-editor": "~0.7.7",
     "bootstrap": "~3.2.0",
     "jquery": "~2.1.1",
-    "superagent": "~0.18.2"
+    "superagent": "~0.18.2",
+    "remotestorage": "~0.10.2"
   },
   "homepage": "https://github.com/elf-pavlik/plp-generator",
   "ignore": [
