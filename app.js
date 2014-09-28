@@ -149,6 +149,21 @@ $(function(){
 
   });
 
+  editor.on('change',function() {
+
+    var errors = editor.validate();
+    if(errors.length) {
+
+      $('#generate_btn').addClass('disabled');
+
+    }else{
+
+      $('#generate_btn').removeClass('disabled');
+
+    }
+
+  });
+
   $('#publish_btn').click(function() {
   superagent.post(window.plp.config.provider)
    .send(localStorage.profile)
