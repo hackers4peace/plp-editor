@@ -1,4 +1,9 @@
 $(function(){
+
+  // Hide steps 2 and 3
+  $('#step2').hide();
+  $('#step3').hide();
+
   // Set default options
   JSONEditor.defaults.options.theme = 'bootstrap3';
 
@@ -99,22 +104,69 @@ $(function(){
     //name: "John Smith"
   //});
 
-  // Get the value
-  var data = editor.getValue();
-  console.log(data.name); // "John Smith"
-  // Validate
-  var errors = editor.validate();
-  if(errors.length) {
-    // Not valid
-  }
+  // BUTTONRY
 
-  $('#generate_btn').click(function() {
-    saveProfile();
+  $('#create_btn').click(function() {
+    $('#step1').fadeOut();
+    $('#banner_step1').slideUp();
+    $('#step2').fadeIn();
   });
 
+  $('#generate_btn').click(function() {
+
+    // Validate
+    var errors = editor.validate();
+    if(errors.length) {
+
+      // Not valid
+
+    }else{
+
+      saveProfile();
+      $('#step2').fadeOut();
+      $('#step3').fadeIn();
+
+    }
+
+  });
+
+  $('#publish_btn').click(function() {
+  superagent.post(window.plp.config.provider)
+   .send(localStorage.profile)
+   .set('Content-Type', 'application/json')
+    .end(function(provRes){
+       if(provRes.ok) {
+         console.log('yay got ' + JSON.stringify(provRes.body));
+         superagent.post(window.plp.config.directory)
+          .send(provRes.body)
+          .set('Content-Type', 'application/json')
+           .end(function(dirRes){
+             console.log(dirRes.body);
+           });
+       } else {
+         console.log('Oh no! error ' + res.text);
+       }
+     });
+  });
+
+  // UTIL FUNCTIONS
+
   function saveProfile(){
+
+    // Print data in console
+    var data = editor.getValue();
+    console.log(data);
+
+    // Store locally
     window.localStorage.setItem('profile',JSON.stringify(editor.getValue()));
-    window.location = 'profile.html';
+
+  }
+
+  function enableRemoteStorage(){
+
+    remoteStorage.access.claim('shares', 'rw');
+    remoteStorage.displayWidget();
+
   }
 
 });
