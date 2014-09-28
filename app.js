@@ -6,6 +6,9 @@ $(function(){
 
   // Set default options
   JSONEditor.defaults.options.theme = 'bootstrap3';
+  JSONEditor.defaults.options.disable_collapse = true;
+  JSONEditor.defaults.options.disable_edit_json = true;
+  JSONEditor.defaults.options.disable_properties = true;
 
   //Initialize the editor
   var editor = new JSONEditor(document.getElementById("editor_holder"),{
@@ -14,83 +17,99 @@ $(function(){
       title: "Person",
       type: "object",
       properties: {
-        name: { "type": "string" },
-        additionalname: { "type": "string"},
-        description: { "type": "string" },
-         birthDate:  { "type": "string"},
-          nationality : { "type" : "string"},
+        name: { "type": "string" , "title": "Name"},
+        additionalname: { "type": "string" , "title": "Additional Name"},
+        description: { "type": "string", "title": "About yourself"},
+        birthDate:  { "type": "string" , "title": "Birth date"},
+        nationality : { "type" : "string", "title": "Nationality"},
+        telephone: { "type" : "string" , "title": "Phone number"},
+        faxNumber: { "type" : "string", "title": "Fax number"},
+        website:  { "type" : "string", "title": "Homepagge"},
+        image: { "type": "string" , "title": "Image URL"},
         address: {
-          type: "object",
-          properties: {
-            street: { "type": "string"},
-            code: { "type": "string"},
-            city: { "type" : "string"},
-            country: { "type" : "string"}
+          type: "array",
+          uniqueItems: true,
+          title: "Locations",
+          items: {
+            type: "object",
+            title: "Location",
+              properties: {
+              street: { "type": "string", "title": "Street"},
+              code: { "type": "string", "title": "Zip code"},
+              city: { "type" : "string", "title": "City"},
+              country: { "type" : "string", "title": "Country"}
+            }
           }
         },
-        telephone: { "type" : "string"},
-        faxNumber: { "type" : "string"},
-        website:  { "type" : "string"},
-        image: { "type": "string" },
-        workLocation: {
-          title: "company",
-          type: "object",
-          properties: {
-                company: { "type" : "string"},
-                jobtitle: { "type" : "string"},
-                street: { "type" : "string"},
-                code: { "type" : "string"},
-                city:  { "type" : "string"}
+        member: {
+          type: "array",
+          uniqueItems: true,
+          title: "Your companies, groups or organisations",
+          items: {
+            type: "object",
+            properties: {
+                company: { "type" : "string", "title": "Organiastion name"},
+                jobtitle: { "type" : "string", "title": "Position"},
+                street: { "type" : "string", "title": "Street"},
+                code: { "type" : "string", "title": "Zip code"},
+                city:  { "type" : "string", "title": "City"},
+                country: { "type" : "string", "title": "Country"}
               }
+          }
         },
         contactPoint: {
           type: "array",
           uniqueItems: true,
+          title: "Contact information (email, social networks, etc)",
           items: {
             type: "object",
-            title: "ContactPoint",
+            title: "Contact",
             properties: {
+              type: {
+                title: "Type",
+                type: "string",
+                enum: [
+                  "Email",
+                  "Facebook",
+                  "Twitter",
+                  "Github",
+                  "LinkedIn",
+                  "Website"
+                ]
+              },
               id: {
                 title: "URL",
                 type: "string"
               }
             }
-          },
-          default: [
-            { id: "mailto:" }
-          ]
-        },
-
-        member: {
-          type: "array",
-          uniqueItems: true,
-          items: {
-            type: "object",
-            title: "Membership",
-            properties: {
-              id: {
-                title: "website",
-                type: "string"
-              },
-              name: { title: "name", type: "string" }
-            }
           }
         },
+        // member: {
+        //   type: "array",
+        //   uniqueItems: true,
+        //   items: {
+        //     type: "object",
+        //     title: "Membership",
+        //     properties: {
+        //       id: {
+        //         title: "website",
+        //         type: "string"
+        //       },
+        //       name: { title: "name", type: "string" }
+        //     }
+        //   }
+        // },
         interest: {
           type: "array",
           uniqueItems: true,
+          title: "Areas of interest",
           items: {
             type: "object",
             title: "Interest",
             properties: {
               name: {
                 title: "name",
-                type: "string",
-                enum: [
-                  "zzz",
-                  "bbb",
-                  "kkk"
-                ]
+                type: "string"
               }
             }
           }
