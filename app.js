@@ -322,11 +322,13 @@ $(function(){
 
 	function saveProfile(){
 
-		// Print data in console
+
 		var data = editor.getValue();
+		data["@context"] = window.plp.config.context;
+		data["@type"] = "Person";
+
 		console.log(data);
 
-		// Store locally
 		window.localStorage.setItem('profile',JSON.stringify(editor.getValue()));
 
 	}
