@@ -45,18 +45,16 @@
 					<ul class="nav navbar-nav navbar-right">
 
 						<li class="dropdown">
-				          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Code & Documentation <span class="caret"></span></a>
-				          <ul class="dropdown-menu" role="menu">
-				            <li><a href="https://github.com/hackers4peace/plp-docs" target="blank">Docs</a></li>
-				            <li class="divider"></li>
-				            <li><a href="https://github.com/hackers4peace/plp-editor" target="blank">Editor</a></li>
-							<li><a href="https://github.com/hackers4peace/plp-directoy" target="blank">Directory</a></li>
-							<li><a href="https://github.com/hackers4peace/plp-provider" target="blank">Provider</a></li>
-							<li><a href="https://github.com/hackers4peace/plp-browser" target="blank">Browser</a></li>
-				          </ul>
-				        </li>
-
-
+		          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Code & Documentation <span class="caret"></span></a>
+		          <ul class="dropdown-menu" role="menu">
+		            <li><a href="https://github.com/hackers4peace/plp-docs" target="blank">Docs</a></li>
+		            <li class="divider"></li>
+		            <li><a href="https://github.com/hackers4peace/plp-editor" target="blank">Editor</a></li>
+								<li><a href="https://github.com/hackers4peace/plp-directoy" target="blank">Directory</a></li>
+								<li><a href="https://github.com/hackers4peace/plp-provider" target="blank">Provider</a></li>
+								<li><a href="https://github.com/hackers4peace/plp-browser" target="blank">Browser</a></li>
+		          </ul>
+		        </li>
 					</ul>
 
 				</div><!--/.nav-collapse -->
@@ -153,7 +151,7 @@
 
 											<span class="input-group-btn">
 
-												<button id="toStep2Edit" class="btn btn-default" type="button">Go!</button>
+												<button id="toStep2Edit" class="btn btn-default disabled" type="button">Go!</button>
 
 											</span>
 
@@ -171,7 +169,7 @@
 
 				</div> <!-- step1 -->
 
-				<div id="step2"> <!-- step2 -->
+				<div id="step2" class="hidden"> <!-- step2 -->
 
 					<div class="container">
 
@@ -215,7 +213,7 @@
 
 				</div> <!-- step2 -->
 
-				<div id="step3">
+				<div id="step3" class="hidden">
 
 					<div class="container">
 
@@ -223,7 +221,7 @@
 
 								<div class="col-md-7">
 
-									<div id="banner_step1" class="jumbotron">
+									<div id="banner_step3" class="jumbotron">
 
 										<div class="container">
 
@@ -240,38 +238,37 @@
 								<div class="col-md-5">
 
 									<div class="panel-group" id="accordion">
-												<div class="panel panel-primary">
+												<div id="step3Option1" class="panel panel-primary">
 														<div class="panel-heading">
 																<h4 class="panel-title">
-																		<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">1. We host it here</a>
+																		<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">We host it</a>
 																</h4>
 														</div>
 														<div id="collapseOne" class="panel-collapse collapse in">
 																<div class="panel-body">
-																		<p>If you do not know where you can store your profile, we can do it for you! Actually, you can already find it in the following URL. If you do not choose this option, we would delete the file inmediately.</p>
-
-													<input class="form-control" type="text" placeholder="http://ldpc/0EA5&FXCA.json" input>
+																		<p>If you do not know where you can store your profile, we can do it for you! Very easy, click the button below and we will give you the URI to your profile.</p>
+																		<a id="step3Option1Btn" class="btn btn-primary">Host it for me</a>
 																</div>
 														</div>
 												</div>
-												<div class="panel panel-primary">
+												<div id="step3Option2" class="panel panel-primary">
 														<div class="panel-heading">
 																<h4 class="panel-title">
-																		<a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">2. You download it and choose where to store it yourself.</a>
+																		<a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">You download it and choose where to store it yourself.</a>
 																</h4>
 														</div>
 														<div id="collapseTwo" class="panel-collapse collapse">
 																<div class="panel-body">
 																		<p>Download your profile data and store it wherever you want: In your webserver, on Dropbox, Google Drive, at a friend's website... you choose!<br></p>
 
-													<a id="download_btn" href="#" class="btn btn-primary btn-lg">Download profile</a>
+																<a id="step3Option2Btn" href="#" class="btn btn-primary btn-lg">Download profile</a>
 																</div>
 														</div>
 												</div>
-												<div class="panel panel-primary">
+												<!-- <div id="step3Option3" class="panel panel-primary">
 														<div class="panel-heading">
 																<h4 class="panel-title">
-																		<a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">3. We store it for you</a>
+																		<a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">We store it for you</a>
 																</h4>
 														</div>
 														<div id="collapseThree" class="panel-collapse collapse">
@@ -281,7 +278,7 @@
 																		<a id="publish_btn" href="#" class="btn btn-primary btn-lg">Upload profile to provider</a>
 																</div>
 														</div>
-												</div>
+												</div> -->
 										</div>
 
 										<h4>Still want to do some corrections?</h4>

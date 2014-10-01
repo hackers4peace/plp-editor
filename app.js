@@ -134,16 +134,12 @@ $(function(){
 
 	// STEP 1
 
-	// Hide steps 2 and 3
-	$('#step2').hide();
-	$('#step3').hide();
-	$('#existing-profile-btn').addClass('disabled');
-
 	// new profile btn
 	$('#toStep2Create').on('click',function() {
 
 		$('#step1').fadeOut();
 		$('#banner_step1').slideUp();
+		$('#step2').removeClass('hidden');
 		$('#step2').fadeIn();
 
 	});
@@ -154,13 +150,13 @@ $(function(){
 
 		if (validateURL(url)){
 
-			var url = $('#existing_profile_field').val();
-
 			superagent.get(url)
 				.withCredentials()
 				.end(function(err,res){
 
 						if (err){
+
+							console.log('Oh no! error ' + res.text);
 
 							$('#existing_profile_field').val('Something went wrong');
 							$('#existing_profile_field').addClass('error');
@@ -176,11 +172,8 @@ $(function(){
 
 								$('#step1').fadeOut();
 								$('#banner_step1').slideUp();
+								$('#step2').removeClass('hidden');
 								$('#step2').fadeIn();
-
-							} else {
-
-								 console.log('Oh no! error ' + res.text);
 
 							}
 
@@ -190,7 +183,7 @@ $(function(){
 
 		}else{
 
-			$('#existing-profile-btn').addClass('disabled');
+			$('#toStep2Edit').addClass('disabled');
 
 		}
 
@@ -202,11 +195,11 @@ $(function(){
 
 		if (validateURL(url)){
 
-			$('#existing-profile-btn').removeClass('disabled');
+			$('#toStep2Edit').removeClass('disabled');
 
 		}else{
 
-			$('#existing-profile-btn').addClass('disabled');
+			$('#toStep2Edit').addClass('disabled');
 
 		}
 
@@ -224,8 +217,10 @@ $(function(){
 
 		}else{
 
-			saveProfile();		  
+			saveProfile();
+
 			$('#step2').fadeOut();
+			$('#step3').removeClass('hidden');
 			$('#step3').fadeIn();
 
 		}
@@ -269,27 +264,61 @@ $(function(){
 
 	});
 
-
-	$('#publish_btn').on('click',function() {
+	$('#step3Option1Btn').on('click',function() {
 
 		superagent.post(window.plp.config.provider)
 		.send(localStorage.profile)
 		.set('Content-Type', 'application/json')
 			.end(function(err,provRes){
+
+				if (err){
+					console.log('Oh no! error ' + err);
+				}
+
 				if(provRes.ok) {
-					console.log('yay got ' + JSON.stringify(provRes.body));
-					superagent.post(window.plp.config.directory)
-						.send(provRes.body)
-						.set('Content-Type', 'application/json')
-						.end(function(err,dirRes){
-							console.log(dirRes.body);
+
+					if (window.plp.config.directory){
+
+						console.log('yay got ' + JSON.stringify(provRes.body));
+
+						superagent.post(window.plp.config.directory)
+							.send(provRes.body)
+							.set('Content-Type', 'application/json')
+							.end(function(err,dirRes){
+								console.log(dirRes.body);
+
+								$('#uri_modal').modal('show');
+
 						});
-				} else {
-					console.log('Oh no! error ' + res.text);
+
+					}
+
+				}
+
+			});
+
+	});
+
+	$('#step3Option2Btn').on('click',function() {
+
+		superagent.post(window.plp.config.provider+'/echo')
+		.send(localStorage.profile)
+		.set('Content-Type', 'application/json')
+			.end(function(err,provRes){
+
+				if (err){
+					console.log('Oh no! error ' + err);
+				}
+
+				if(provRes.ok) {
+
+					alert(provRes.body);
+
 				}
 			});
 
 	});
+
 
 	// UTILITY FUNCTIONS
 
