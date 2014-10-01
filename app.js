@@ -156,7 +156,7 @@ $(function(){
 
 						if (err){
 
-							console.log('Oh no! error ' + res.text);
+							console.log('Oh no! error ' + err);
 
 							$('#existing_profile_field').val('Something went wrong');
 							$('#existing_profile_field').addClass('error');
