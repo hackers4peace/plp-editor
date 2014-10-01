@@ -308,31 +308,11 @@ $(function(){
 
 	});
 
-	$('#step3Option2Btn').on('click',function() {
+	$('#step3Option1Btn').on('click',function() {
 
-		superagent.post(window.plp.config.provider+'/echo')
-		.send(localStorage.profile)
-		.set('Content-Type', 'application/json')
-			.end(function(err,provRes){
-
-				if (err){
-
-					console.log('Error ' + err);
-
-				}else{
-
-					if(provRes.ok) {
-
-						alert(provRes.body);
-
-					}
-
-				}
-
-			});
+		// What to do here
 
 	});
-
 
 	// UTILITY FUNCTIONS
 
