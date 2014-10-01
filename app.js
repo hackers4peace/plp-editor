@@ -261,7 +261,6 @@ $(function(){
 	$('#step3Option1Btn').on('click',function() {
 
 		superagent.post(window.plp.config.provider)
-		.withCredentials()
 		.send(localStorage.profile)
 		.set('Content-Type', 'application/json')
 			.end(function(err,provRes){
@@ -325,7 +324,7 @@ $(function(){
 						alert(provRes.body);
 
 					}
-					
+
 				}
 
 			});
