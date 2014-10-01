@@ -13,8 +13,6 @@ $(function(){
 	//Initialize the editor
 	function initEditor(profile){
 
-		 console.log("Init editor");
-
 		 editor = new JSONEditor(document.getElementById('editor_holder'),{
 
 			schema: {
@@ -263,6 +261,7 @@ $(function(){
 	$('#step3Option1Btn').on('click',function() {
 
 		superagent.post(window.plp.config.provider)
+		.withCredentials()
 		.send(localStorage.profile)
 		.set('Content-Type', 'application/json')
 			.end(function(err,provRes){
@@ -292,7 +291,7 @@ $(function(){
 
 								if (dirRes.ok){
 
-									console.log('Profile succesfully listed in directory' + dirRes.body);	
+									console.log('Profile succesfully listed in directory' + dirRes.body);
 
 								}
 
