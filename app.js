@@ -8,14 +8,13 @@ $(function(){
 	JSONEditor.defaults.options.disable_edit_json = true;
 	JSONEditor.defaults.options.disable_properties = true;
 
+
 	var editor;
 
 	//Initialize the editor
-	function initEditor(profile){
+	function initEditor(){
 
-		 console.log("Init editor");
-
-		 editor = new JSONEditor(document.getElementById('editor_holder'),{
+		  editor = new JSONEditor(document.getElementById('editor_holder'),{
 
 			schema: {
 				title: "Person",
@@ -119,13 +118,32 @@ $(function(){
 						}
 					}
 				}
-			},
-			startval: profile
+			}
+		});
+
+
+		editor.on('change',function() {
+
+			var errors = editor.validate();
+			if(errors.length) {
+
+				$('#validator').removeClass('ok');
+				$('#validator').text('Not valid');
+				$('#validator').addClass('error');
+				$('#generate_btn').addClass('disabled');
+
+			}else{
+
+				$('#validator').removeClass('error');
+				$('#validator').text('Valid');
+				$('#validator').addClass('ok');
+				$('#generate_btn').removeClass('disabled');
+
+			}
+
 		});
 
 	}
-
-	initEditor();
 
 	// Set the value
 	//editor.setValue({
@@ -136,6 +154,8 @@ $(function(){
 
 	// new profile btn
 	$('#toStep2Create').on('click',function() {
+
+		initEditor();
 
 		$('#step1').fadeOut();
 		$('#banner_step1').slideUp();
@@ -151,12 +171,11 @@ $(function(){
 		if (validateURL(url)){
 
 			superagent.get(url)
-				.withCredentials()
 				.end(function(err,res){
 
 						if (err){
 
-							console.log('Oh no! error ' + err);
+							console.log('Error ' + err);
 
 							$('#existing_profile_field').val('Something went wrong');
 							$('#existing_profile_field').addClass('error');
@@ -165,10 +184,10 @@ $(function(){
 
 							if(res.ok) {
 
-								console.log('yay got ' + JSON.stringify(res.body));
+								console.log('Profile correctly downloaded from provider ' + res.body);
 
-								window.localStorage.setItem('profile',res.body);
-								loadProfileIntoEditor();
+								initEditor();
+								editor.setValue(JSON.parse(res.body));
 
 								$('#step1').fadeOut();
 								$('#banner_step1').slideUp();
@@ -211,11 +230,7 @@ $(function(){
 
 		// Validate
 		var errors = editor.validate();
-		if(errors.length) {
-
-			// Not valid
-
-		}else{
+		if(!errors.length) {
 
 			saveProfile();
 
@@ -235,27 +250,6 @@ $(function(){
 
 	});
 
-	editor.on('change',function() {
-
-		var errors = editor.validate();
-		if(errors.length) {
-
-			$('#validator').removeClass('ok');
-			$('#validator').text('Not valid');
-			$('#validator').addClass('error');
-			$('#generate_btn').addClass('disabled');
-
-		}else{
-
-			$('#validator').removeClass('error');
-			$('#validator').text('Valid');
-			$('#validator').addClass('ok');
-			$('#generate_btn').removeClass('disabled');
-
-		}
-
-	});
-
 	// STEP 3
 	$('#backToStep2').on('click',function() {
 
@@ -272,24 +266,39 @@ $(function(){
 			.end(function(err,provRes){
 
 				if (err){
-					console.log('Oh no! error ' + err);
-				}
 
-				if(provRes.ok) {
+					console.log('Error ' + err);
 
-					if (window.plp.config.directory){
+				}else{
 
-						console.log('yay got ' + JSON.stringify(provRes.body));
+					if(provRes.ok) {
 
-						superagent.post(window.plp.config.directory)
-							.send(provRes.body)
-							.set('Content-Type', 'application/json')
-							.end(function(err,dirRes){
-								console.log(dirRes.body);
+						console.log('Profile successfully pushed to provider ' + JSON.stringify(provRes.body));
 
-								$('#uri_modal').modal('show');
+						$('#banner_step3').html('<h1>Your profile lives here:</h1><h3>'+provRes.body['@id']+'</h3><p>You can use this URI for listing it in the different <a href="https://github.com/hackers4peace/plp-docs">directories supporting PLP</a></p>');
 
-						});
+						if (window.plp.config.directory){
+
+							superagent.post(window.plp.config.directory)
+								.send(provRes.body)
+								.set('Content-Type', 'application/json')
+								.end(function(err,dirRes){
+
+									if (err){
+
+										console.log('Error ' + err);
+
+									}
+
+									if (dirRes.ok){
+
+										console.log('Profile succesfully listed in directory ' + JSON.stringify(dirRes.body));
+
+									}
+
+							});
+
+						}
 
 					}
 
@@ -299,28 +308,17 @@ $(function(){
 
 	});
 
-	$('#step3Option2Btn').on('click',function() {
+	$('#step3Option1Btn').on('click',function() {
 
-		superagent.post(window.plp.config.provider+'/echo')
-		.send(localStorage.profile)
-		.set('Content-Type', 'application/json')
-			.end(function(err,provRes){
-
-				if (err){
-					console.log('Oh no! error ' + err);
-				}
-
-				if(provRes.ok) {
-
-					alert(provRes.body);
-
-				}
-			});
+		// What to do here
 
 	});
 
-
 	// UTILITY FUNCTIONS
+
+	function profileWithoutId(profile){
+		return delete profile['@id'];
+	}
 
 	function saveProfile(){
 
@@ -330,12 +328,6 @@ $(function(){
 
 		// Store locally
 		window.localStorage.setItem('profile',JSON.stringify(editor.getValue()));
-
-	}
-
-	function loadProfileIntoEditor(){
-
-		initEditor(window.localStorage.getItem('profile'));
 
 	}
 
