@@ -13,10 +13,7 @@ $(function(){
 	//Initialize the editor
 	function initEditor(profile){
 
-		 var holder = document.getElementById('editor_holder');
-		 holder.html('');
-
-		 editor = new JSONEditor(holder,{
+		 editor = new JSONEditor(document.getElementById('editor_holder'),{
 
 			schema: {
 				title: "Person",
@@ -126,8 +123,6 @@ $(function(){
 
 	}
 
-	initEditor();
-
 	// Set the value
 	//editor.setValue({
 		//name: "John Smith"
@@ -137,6 +132,8 @@ $(function(){
 
 	// new profile btn
 	$('#toStep2Create').on('click',function() {
+
+		initEditor();
 
 		$('#step1').fadeOut();
 		$('#banner_step1').slideUp();
