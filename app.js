@@ -13,7 +13,10 @@ $(function(){
 	//Initialize the editor
 	function initEditor(profile){
 
-		 editor = new JSONEditor(document.getElementById('editor_holder'),{
+		 var holder = document.getElementById('editor_holder');
+		 holder.html('');
+
+		 editor = new JSONEditor(holder,{
 
 			schema: {
 				title: "Person",
@@ -162,7 +165,7 @@ $(function(){
 
 							if(res.ok) {
 
-								console.log('Profile correctly downloaded from provider ' + JSON.stringify(res.body));
+								console.log('Profile correctly downloaded from provider ' + res.body);
 
 								window.localStorage.setItem('profile',res.body);
 								loadProfileIntoEditor();
