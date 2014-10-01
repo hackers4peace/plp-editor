@@ -8,12 +8,13 @@ $(function(){
 	JSONEditor.defaults.options.disable_edit_json = true;
 	JSONEditor.defaults.options.disable_properties = true;
 
+
 	var editor;
 
 	//Initialize the editor
 	function initEditor(profile){
 
-		 editor = new JSONEditor(document.getElementById('editor_holder'),{
+		  editor = new JSONEditor(document.getElementById('editor_holder'),{
 
 			schema: {
 				title: "Person",
@@ -121,6 +122,28 @@ $(function(){
 			startval: profile
 		});
 
+
+		editor.on('change',function() {
+
+			var errors = editor.validate();
+			if(errors.length) {
+
+				$('#validator').removeClass('ok');
+				$('#validator').text('Not valid');
+				$('#validator').addClass('error');
+				$('#generate_btn').addClass('disabled');
+
+			}else{
+
+				$('#validator').removeClass('error');
+				$('#validator').text('Valid');
+				$('#validator').addClass('ok');
+				$('#generate_btn').removeClass('disabled');
+
+			}
+
+		});
+
 	}
 
 	// Set the value
@@ -225,27 +248,6 @@ $(function(){
 		$('#step2').fadeOut();
 		$('#step1').fadeIn();
 		$('#banner_step1').slideDown();
-
-	});
-
-	editor.on('change',function() {
-
-		var errors = editor.validate();
-		if(errors.length) {
-
-			$('#validator').removeClass('ok');
-			$('#validator').text('Not valid');
-			$('#validator').addClass('error');
-			$('#generate_btn').addClass('disabled');
-
-		}else{
-
-			$('#validator').removeClass('error');
-			$('#validator').text('Valid');
-			$('#validator').addClass('ok');
-			$('#generate_btn').removeClass('disabled');
-
-		}
 
 	});
 
