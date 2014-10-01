@@ -290,7 +290,7 @@ $(function(){
 
 									if (dirRes.ok){
 
-										console.log('Profile succesfully listed in directory' + dirRes.body);
+										console.log('Profile succesfully listed in directory ' + JSON.stringify(dirRes.body));
 
 									}
 
