@@ -149,7 +149,6 @@ $(function(){
 		if (validateURL(url)){
 
 			superagent.get(url)
-				.withCredentials()
 				.end(function(err,res){
 
 						if (err){
