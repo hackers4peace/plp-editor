@@ -187,7 +187,7 @@ $(function(){
 								console.log('Profile correctly downloaded from provider ' + res.body);
 
 								initEditor();
-								//editor.setValue(res.body);
+								editor.setValue(JSON.parse(res.body)));
 
 								$('#step1').fadeOut();
 								$('#banner_step1').slideUp();
@@ -333,6 +333,10 @@ $(function(){
 
 
 	// UTILITY FUNCTIONS
+
+	function profileWithoutId(profile){
+		return delete profile['@id'];
+	}
 
 	function saveProfile(){
 
