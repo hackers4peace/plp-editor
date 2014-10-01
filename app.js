@@ -275,6 +275,8 @@ $(function(){
 
 						console.log('Profile successfully pushed to provider ' + JSON.stringify(provRes.body));
 
+						$('#banner_step3').html('<h1>Your profile lives here:</h1><h4>'+provRes(body)+'</h4><p>You can use this URI for listing it in the different <a href="https://github.com/hackers4peace/plp-docs">directories supporting PLP</a></p>');
+
 						if (window.plp.config.directory){
 
 							superagent.post(window.plp.config.directory)
