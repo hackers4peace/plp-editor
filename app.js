@@ -187,7 +187,7 @@ $(function(){
 								console.log('Profile correctly downloaded from provider ' + res.body);
 
 								initEditor();
-								editor.setValue(res.body);
+								//editor.setValue(res.body);
 
 								$('#step1').fadeOut();
 								$('#banner_step1').slideUp();
