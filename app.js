@@ -156,7 +156,7 @@ $(function(){
 
 						if (err){
 
-							console.log('Oh no! error ' + err);
+							console.log('Error ' + err);
 
 							$('#existing_profile_field').val('Something went wrong');
 							$('#existing_profile_field').addClass('error');
@@ -165,7 +165,7 @@ $(function(){
 
 							if(res.ok) {
 
-								console.log('yay got ' + JSON.stringify(res.body));
+								console.log('Profile correctly downloaded from provider ' + JSON.stringify(res.body));
 
 								window.localStorage.setItem('profile',res.body);
 								loadProfileIntoEditor();
@@ -211,11 +211,7 @@ $(function(){
 
 		// Validate
 		var errors = editor.validate();
-		if(errors.length) {
-
-			// Not valid
-
-		}else{
+		if(!errors.length) {
 
 			saveProfile();
 
@@ -272,22 +268,33 @@ $(function(){
 			.end(function(err,provRes){
 
 				if (err){
-					console.log('Oh no! error ' + err);
+
+					console.log('Error ' + err);
+
 				}
 
 				if(provRes.ok) {
 
-					if (window.plp.config.directory){
+					console.log('Profile successfully pushed to provider ' + JSON.stringify(provRes.body));
 
-						console.log('yay got ' + JSON.stringify(provRes.body));
+					if (window.plp.config.directory){
 
 						superagent.post(window.plp.config.directory)
 							.send(provRes.body)
 							.set('Content-Type', 'application/json')
 							.end(function(err,dirRes){
-								console.log(dirRes.body);
 
-								$('#uri_modal').modal('show');
+								if (err){
+
+									console.log('Error ' + err);
+
+								}
+
+								if (dirRes.ok){
+
+									console.log('Profile succesfully listed in directory' + dirRes.body);	
+
+								}
 
 						});
 
@@ -307,7 +314,7 @@ $(function(){
 			.end(function(err,provRes){
 
 				if (err){
-					console.log('Oh no! error ' + err);
+					console.log('Error ' + err);
 				}
 
 				if(provRes.ok) {
