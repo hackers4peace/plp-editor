@@ -12,7 +12,7 @@ $(function(){
 	var editor;
 
 	//Initialize the editor
-	function initEditor(profile){
+	function initEditor(){
 
 		  editor = new JSONEditor(document.getElementById('editor_holder'),{
 
@@ -118,8 +118,7 @@ $(function(){
 						}
 					}
 				}
-			},
-			startval: profile
+			}
 		});
 
 
@@ -187,8 +186,8 @@ $(function(){
 
 								console.log('Profile correctly downloaded from provider ' + res.body);
 
-								window.localStorage.setItem('profile',res.body);
-								loadProfileIntoEditor();
+								initEditor();
+								editor.setValue(res.body);
 
 								$('#step1').fadeOut();
 								$('#banner_step1').slideUp();
@@ -343,12 +342,6 @@ $(function(){
 
 		// Store locally
 		window.localStorage.setItem('profile',JSON.stringify(editor.getValue()));
-
-	}
-
-	function loadProfileIntoEditor(){
-
-		initEditor(window.localStorage.getItem('profile'));
 
 	}
 
