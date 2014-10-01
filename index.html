@@ -8,11 +8,14 @@
 		<title>PLP: Portable Linked Profiles</title>
 
 		<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+		<link rel="stylesheet" href="style.css" />
 
 		<script src="bower_components/jquery/dist/jquery.js"></script>
 		<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
 		<script src="bower_components/json-editor/dist/jsoneditor.js"></script>
 		<script src="bower_components/remotestorage/remotestorage.js"></script>
+		<script src="bower_components/superagent/superagent.js"></script>
+		<script src="config.js"></script>
 		<script src="app.js"></script>
 
 	</head>
@@ -34,21 +37,25 @@
 
 					<ul class="nav navbar-nav">
 
-						<!--<li class="active"><a href="#">Home</a></li>
-
-						<li><a href="#about">About</a></li>
-
-						<li><a href="#contact">Contact</a></li> -->
+						<!-- <li class="active"><a id="previousStep" href="#"><</a></li>
+						<li class="active"><a id="nextStep" href="#">></a></li> -->
 
 					</ul>
 
 					<ul class="nav navbar-nav navbar-right">
 
-						<li><a href="https://github.com/hackers4peace/plp-editor" target="blank">Editor</a></li>
-						<li><a href="https://github.com/hackers4peace/plp-directoy" target="blank">Directory</a></li>
-						<li><a href="https://github.com/hackers4peace/plp-provider" target="blank">Provider</a></li>
-						<li><a href="https://github.com/hackers4peace/plp-browser" target="blank">Browser</a></li>
-						<li><a href="https://github.com/hackers4peace/plp-docs" target="blank">Docs</a></li>
+						<li class="dropdown">
+				          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Code & Documentation <span class="caret"></span></a>
+				          <ul class="dropdown-menu" role="menu">
+				            <li><a href="https://github.com/hackers4peace/plp-docs" target="blank">Docs</a></li>
+				            <li class="divider"></li>
+				            <li><a href="https://github.com/hackers4peace/plp-editor" target="blank">Editor</a></li>
+							<li><a href="https://github.com/hackers4peace/plp-directoy" target="blank">Directory</a></li>
+							<li><a href="https://github.com/hackers4peace/plp-provider" target="blank">Provider</a></li>
+							<li><a href="https://github.com/hackers4peace/plp-browser" target="blank">Browser</a></li>
+				          </ul>
+				        </li>
+
 
 					</ul>
 
@@ -118,9 +125,9 @@
 
 									<div class="panel-body">
 
-										<p>I just takes you 5 minutes.</p>
+										<p>It will take you just 5 minutes.</p>
 
-										<p><a id="create_btn" class="btn btn-success btn-lg" role="button">Open profile editor</a></p>
+										<p><a id="toStep2Create" class="btn btn-success btn-lg" role="button">Open profile editor</a></p>
 
 									</div>
 
@@ -142,17 +149,17 @@
 
 										<div class="input-group">
 
-											<input type="text" class="form-control" placeholder="http://">
+											<input id="existing_profile_field" type="text" class="form-control" placeholder="http://">
 
 											<span class="input-group-btn">
 
-												<button class="btn btn-default" type="button">Go!</button>
+												<button id="toStep2Edit" class="btn btn-default" type="button">Go!</button>
 
 											</span>
 
 										</div>
 
-								  	</div>
+									</div>
 
 								</div>
 
@@ -181,7 +188,14 @@
 
 										<hr>
 
-										<a id="generate_btn" class="btn btn-primary btn-md" >Generate your profile</a>
+										<span>
+											<a id="toStep3Generate" class="btn btn-primary btn-md">Generate your profile</a>
+											<a id="validator"></a>
+										</span>
+
+										<hr>
+
+										<a id="backToStep1" class="btn btn-default btn-md">Back</a>
 
 									</div> <!-- Instructions -->
 
@@ -203,85 +217,75 @@
 
 				<div id="step3">
 
-					<div id="banner_step1" class="jumbotron">
-
-						<div class="container">
-
-							<h1>Done!</h1>
-
-							<p>Now, you have to decide where you want to store your profile data.<br>Following options are available:</p>
-
-						</div>
-
-					</div>
-
 					<div class="container">
 
 							<div class="row">
 
-								<div class="col-md-4">
+								<div class="col-md-7">
 
-										<div class="panel panel-default">
+									<div id="banner_step1" class="jumbotron">
 
-											<div class="panel-heading">
+										<div class="container">
 
-												<h4>We host it here</h4>
+											<h1>Done!</h1>
 
-											</div>
-
-								  			<div class="panel-body">
-
-												<p>If you do not know where you can store your profile, we can do it for you! Actually, you can already find it in the following URL. If you do not choose this option, we would delete the file inmediately.</p>
-
-												<input class="form-control" type="text" placeholder="http://ldpc/0EA5&FXCA.json" input>
-
-											</div>
+											<p>Now, you have to decide where you want to store your profile data.<br>Following options are available:</p>
 
 										</div>
+
+									</div>
 
 								</div>
 
-								<div class="col-md-4">
+								<div class="col-md-5">
 
-									<div class="panel panel-default">
+									<div class="panel-group" id="accordion">
+												<div class="panel panel-primary">
+														<div class="panel-heading">
+																<h4 class="panel-title">
+																		<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">1. We host it here</a>
+																</h4>
+														</div>
+														<div id="collapseOne" class="panel-collapse collapse in">
+																<div class="panel-body">
+																		<p>If you do not know where you can store your profile, we can do it for you! Actually, you can already find it in the following URL. If you do not choose this option, we would delete the file inmediately.</p>
 
-										<div class="panel-heading">
+													<input class="form-control" type="text" placeholder="http://ldpc/0EA5&FXCA.json" input>
+																</div>
+														</div>
+												</div>
+												<div class="panel panel-primary">
+														<div class="panel-heading">
+																<h4 class="panel-title">
+																		<a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">2. You download it and choose where to store it yourself.</a>
+																</h4>
+														</div>
+														<div id="collapseTwo" class="panel-collapse collapse">
+																<div class="panel-body">
+																		<p>Download your profile data and store it wherever you want: In your webserver, on Dropbox, Google Drive, at a friend's website... you choose!<br></p>
 
-											<h4>You download it and choose where to store it</h4>
+													<a id="download_btn" href="#" class="btn btn-primary btn-lg">Download profile</a>
+																</div>
+														</div>
+												</div>
+												<div class="panel panel-primary">
+														<div class="panel-heading">
+																<h4 class="panel-title">
+																		<a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">3. We store it for you</a>
+																</h4>
+														</div>
+														<div id="collapseThree" class="panel-collapse collapse">
+																<div class="panel-body">
+																		<p>PLP can store the profile for you.  </p>
 
+																		<a id="publish_btn" href="#" class="btn btn-primary btn-lg">Upload profile to provider</a>
+																</div>
+														</div>
+												</div>
 										</div>
 
-							  			<div class="panel-body">
-
-							  				<p>Download your profile data and store it wherever you want: In your webserver, on Dropbox, Google Drive, at a friend's website... you choose!</p>
-
-											<a id="download_btn" href="#" class="btn btn-primary btn-lg">Download profile</a>
-
-										</div>
-
-									</div>
-
-							 	</div>
-
-								<div class="col-md-4">
-
-									<div class="panel panel-default">
-
-										<div class="panel-heading">
-
-											<h4>We store it for you</h4>
-
-										</div>
-
-							  			<div class="panel-body">
-
-							  				<p>PLP can store the profile for you.  </p>
-
-											<a id="publish_btn" href="#" class="btn btn-primary btn-lg">Upload profile to provider</a>
-
-										</div>
-
-									</div>
+										<h4>Still want to do some corrections?</h4>
+										<a id="backToStep2" class="btn btn-default">Go Back</a>
 
 								</div>
 
@@ -297,13 +301,13 @@
 
 			<div class="footer">
 
-		      <div class="container">
+			  <div class="container">
 
-		        <p class="text-muted">The PLP (Portable Linked Profiles) is based on Open Web Standards, Common Vocabularies and Open Source technologies. <a href="https://github.com/hackers4peace/plp-docs">Read the docs</a> . <a href="http://creativecommons.org/about/cc0"> CCO - No rights reserved</a> </p>
+				<p class="text-muted">The PLP (Portable Linked Profiles) is based on Open Web Standards, Common Vocabularies and Open Source technologies. <a href="https://github.com/hackers4peace/plp-docs">Read the docs</a> . <a href="http://creativecommons.org/about/cc0"> CCO - No rights reserved</a> </p>
 
-		      </div>
+			  </div>
 
-		    </div>
+			</div>
 
 		</div>
 
