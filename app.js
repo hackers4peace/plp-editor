@@ -270,32 +270,34 @@ $(function(){
 
 					console.log('Error ' + err);
 
-				}
+				}else{
 
-				if(provRes.ok) {
+					if(provRes.ok) {
 
-					console.log('Profile successfully pushed to provider ' + JSON.stringify(provRes.body));
+						console.log('Profile successfully pushed to provider ' + JSON.stringify(provRes.body));
 
-					if (window.plp.config.directory){
+						if (window.plp.config.directory){
 
-						superagent.post(window.plp.config.directory)
-							.send(provRes.body)
-							.set('Content-Type', 'application/json')
-							.end(function(err,dirRes){
+							superagent.post(window.plp.config.directory)
+								.send(provRes.body)
+								.set('Content-Type', 'application/json')
+								.end(function(err,dirRes){
 
-								if (err){
+									if (err){
 
-									console.log('Error ' + err);
+										console.log('Error ' + err);
 
-								}
+									}
 
-								if (dirRes.ok){
+									if (dirRes.ok){
 
-									console.log('Profile succesfully listed in directory' + dirRes.body);
+										console.log('Profile succesfully listed in directory' + dirRes.body);
 
-								}
+									}
 
-						});
+							});
+
+						}
 
 					}
 
@@ -313,14 +315,19 @@ $(function(){
 			.end(function(err,provRes){
 
 				if (err){
+
 					console.log('Error ' + err);
+
+				}else{
+
+					if(provRes.ok) {
+
+						alert(provRes.body);
+
+					}
+					
 				}
 
-				if(provRes.ok) {
-
-					alert(provRes.body);
-
-				}
 			});
 
 	});
