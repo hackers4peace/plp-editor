@@ -1,206 +1,326 @@
 $(function(){
 
-  // Hide steps 2 and 3
-  $('#step2').hide();
-  $('#step3').hide();
+	// EDITOR
 
-  // Set default options
-  JSONEditor.defaults.options.theme = 'bootstrap3';
-  JSONEditor.defaults.options.disable_collapse = true;
-  JSONEditor.defaults.options.disable_edit_json = true;
-  JSONEditor.defaults.options.disable_properties = true;
+	// Set default options
+	JSONEditor.defaults.options.theme = 'bootstrap3';
+	JSONEditor.defaults.options.disable_collapse = true;
+	JSONEditor.defaults.options.disable_edit_json = true;
+	JSONEditor.defaults.options.disable_properties = true;
 
-  //Initialize the editor
-  var editor = new JSONEditor(document.getElementById("editor_holder"),{
+	var editor;
 
-    schema: {
-      title: "Person",
-      type: "object",
-      properties: {
-        name: { "type": "string" , "title": "Name"},
-        additionalname: { "type": "string" , "title": "Additional Name"},
-        description: { "type": "string", "title": "About yourself"},
-        birthDate:  { "type": "string" , "title": "Birth date"},
-        nationality : { "type" : "string", "title": "Nationality"},
-        telephone: { "type" : "string" , "title": "Phone number"},
-        faxNumber: { "type" : "string", "title": "Fax number"},
-        website:  { "type" : "string", "title": "Homepagge"},
-        image: { "type": "string" , "title": "Image URL"},
-        address: {
-          type: "array",
-          uniqueItems: true,
-          title: "Locations",
-          items: {
-            type: "object",
-            title: "Location",
-              properties: {
-              street: { "type": "string", "title": "Street"},
-              code: { "type": "string", "title": "Zip code"},
-              city: { "type" : "string", "title": "City"},
-              country: { "type" : "string", "title": "Country"}
-            }
-          }
-        },
-        member: {
-          type: "array",
-          uniqueItems: true,
-          title: "Your companies, groups or organisations",
-          items: {
-            type: "object",
-            properties: {
-                company: { "type" : "string", "title": "Organiastion name"},
-                jobtitle: { "type" : "string", "title": "Position"},
-                street: { "type" : "string", "title": "Street"},
-                code: { "type" : "string", "title": "Zip code"},
-                city:  { "type" : "string", "title": "City"},
-                country: { "type" : "string", "title": "Country"}
-              }
-          }
-        },
-        contactPoint: {
-          type: "array",
-          uniqueItems: true,
-          title: "Contact information (email, social networks, etc)",
-          items: {
-            type: "object",
-            title: "Contact",
-            properties: {
-              type: {
-                title: "Type",
-                type: "string",
-                enum: [
-                  "Email",
-                  "Facebook",
-                  "Twitter",
-                  "Github",
-                  "LinkedIn",
-                  "Website"
-                ]
-              },
-              id: {
-                title: "URL",
-                type: "string"
-              }
-            }
-          }
-        },
-        // member: {
-        //   type: "array",
-        //   uniqueItems: true,
-        //   items: {
-        //     type: "object",
-        //     title: "Membership",
-        //     properties: {
-        //       id: {
-        //         title: "website",
-        //         type: "string"
-        //       },
-        //       name: { title: "name", type: "string" }
-        //     }
-        //   }
-        // },
-        interest: {
-          type: "array",
-          uniqueItems: true,
-          title: "Areas of interest",
-          items: {
-            type: "object",
-            title: "Interest",
-            properties: {
-              name: {
-                title: "name",
-                type: "string"
-              }
-            }
-          }
-        }
-      }
-    }
-  });
+	//Initialize the editor
+	function initEditor(profile){
 
-  // Set the value
-  //editor.setValue({
-    //name: "John Smith"
-  //});
+		 console.log("Init editor");
 
-  // BUTTONRY
+		 editor = new JSONEditor(document.getElementById('editor_holder'),{
 
-  $('#create_btn').click(function() {
-    $('#step1').fadeOut();
-    $('#banner_step1').slideUp();
-    $('#step2').fadeIn();
-  });
+			schema: {
+				title: "Person",
+				type: "object",
+				properties: {
+					name: { "type": "string" , "title": "Name"},
+					additionalname: { "type": "string" , "title": "Additional Name"},
+					description: { "type": "string", "title": "About yourself"},
+					birthDate:  { "type": "string" , "title": "Birth date"},
+					nationality : { "type" : "string", "title": "Nationality"},
+					telephone: { "type" : "string" , "title": "Phone number"},
+					faxNumber: { "type" : "string", "title": "Fax number"},
+					website:  { "type" : "string", "title": "Homepagge"},
+					image: { "type": "string" , "title": "Image URL"},
+					address: {
+						type: "array",
+						uniqueItems: true,
+						title: "Locations",
+						items: {
+							type: "object",
+							title: "Location",
+								properties: {
+								street: { "type": "string", "title": "Street"},
+								code: { "type": "string", "title": "Zip code"},
+								city: { "type" : "string", "title": "City"},
+								country: { "type" : "string", "title": "Country"}
+							}
+						}
+					},
+					member: {
+						type: "array",
+						uniqueItems: true,
+						title: "Your companies, groups or organisations",
+						items: {
+							type: "object",
+							properties: {
+									company: { "type" : "string", "title": "Organiastion name"},
+									jobtitle: { "type" : "string", "title": "Position"},
+									street: { "type" : "string", "title": "Street"},
+									code: { "type" : "string", "title": "Zip code"},
+									city:  { "type" : "string", "title": "City"},
+									country: { "type" : "string", "title": "Country"}
+								}
+						}
+					},
+					contactPoint: {
+						type: "array",
+						uniqueItems: true,
+						title: "Contact information (email, social networks, etc)",
+						items: {
+							type: "object",
+							title: "Contact",
+							properties: {
+								type: {
+									title: "Type",
+									type: "string",
+									enum: [
+										"Email",
+										"Facebook",
+										"Twitter",
+										"Github",
+										"LinkedIn",
+										"Website"
+									]
+								},
+								id: {
+									title: "URL",
+									type: "string"
+								}
+							}
+						}
+					},
+					// member: {
+					//   type: "array",
+					//   uniqueItems: true,
+					//   items: {
+					//     type: "object",
+					//     title: "Membership",
+					//     properties: {
+					//       id: {
+					//         title: "website",
+					//         type: "string"
+					//       },
+					//       name: { title: "name", type: "string" }
+					//     }
+					//   }
+					// },
+					interest: {
+						type: "array",
+						uniqueItems: true,
+						title: "Areas of interest",
+						items: {
+							type: "object",
+							title: "Interest",
+							properties: {
+								name: {
+									title: "name",
+									type: "string"
+								}
+							}
+						}
+					}
+				}
+			},
+			startval: profile
+		});
 
-  $('#generate_btn').click(function() {
+	}
 
-    // Validate
-    var errors = editor.validate();
-    if(errors.length) {
+	initEditor();
 
-      // Not valid
+	// Set the value
+	//editor.setValue({
+		//name: "John Smith"
+	//});
 
-    }else{
+	// STEP 1
 
-      saveProfile();
-      $('#step2').fadeOut();
-      $('#step3').fadeIn();
+	// Hide steps 2 and 3
+	$('#step2').hide();
+	$('#step3').hide();
+	$('#existing-profile-btn').addClass('disabled');
 
-    }
+	// new profile btn
+	$('#toStep2Create').on('click',function() {
 
-  });
+		$('#step1').fadeOut();
+		$('#banner_step1').slideUp();
+		$('#step2').fadeIn();
 
-  editor.on('change',function() {
+	});
 
-    var errors = editor.validate();
-    if(errors.length) {
+	$('#toStep2Edit').on('click',function() {
 
-      $('#generate_btn').addClass('disabled');
+		var url = $('#existing_profile_field').val();
 
-    }else{
+		if (validateURL(url)){
 
-      $('#generate_btn').removeClass('disabled');
+			var url = $('#existing_profile_field').val();
 
-    }
+			superagent.get(url)
+				.withCredentials()
+				.end(function(err,res){
 
-  });
+						if (err){
 
-  $('#publish_btn').click(function() {
-  superagent.post(window.plp.config.provider)
-   .send(localStorage.profile)
-   .set('Content-Type', 'application/json')
-    .end(function(provRes){
-       if(provRes.ok) {
-         console.log('yay got ' + JSON.stringify(provRes.body));
-         superagent.post(window.plp.config.directory)
-          .send(provRes.body)
-          .set('Content-Type', 'application/json')
-           .end(function(dirRes){
-             console.log(dirRes.body);
-           });
-       } else {
-         console.log('Oh no! error ' + res.text);
-       }
-     });
-  });
+							$('#existing_profile_field').val('Something went wrong');
+							$('#existing_profile_field').addClass('error');
 
-  // UTIL FUNCTIONS
+						}else{
 
-  function saveProfile(){
+							if(res.ok) {
 
-    // Print data in console
-    var data = editor.getValue();
-    console.log(data);
+								console.log('yay got ' + JSON.stringify(res.body));
 
-    // Store locally
-    window.localStorage.setItem('profile',JSON.stringify(editor.getValue()));
+								window.localStorage.setItem('profile',res.body);
+								loadProfileIntoEditor();
 
-  }
+								$('#step1').fadeOut();
+								$('#banner_step1').slideUp();
+								$('#step2').fadeIn();
 
-  function enableRemoteStorage(){
+							} else {
 
-    remoteStorage.access.claim('shares', 'rw');
-    remoteStorage.displayWidget();
+								 console.log('Oh no! error ' + res.text);
 
-  }
+							}
+
+						}
+
+				 });
+
+		}else{
+
+			$('#existing-profile-btn').addClass('disabled');
+
+		}
+
+	});
+
+	$('#existing_profile_field').on('input',function() {
+
+		var url = $('#existing_profile_field').val();
+
+		if (validateURL(url)){
+
+			$('#existing-profile-btn').removeClass('disabled');
+
+		}else{
+
+			$('#existing-profile-btn').addClass('disabled');
+
+		}
+
+	});
+
+	// STEP 2
+
+	$('#toStep3Generate').on('click',function() {
+
+		// Validate
+		var errors = editor.validate();
+		if(errors.length) {
+
+			// Not valid
+
+		}else{
+
+			saveProfile();		  
+			$('#step2').fadeOut();
+			$('#step3').fadeIn();
+
+		}
+
+	});
+
+	$('#backToStep1').on('click',function() {
+
+		$('#step2').fadeOut();
+		$('#step1').fadeIn();
+		$('#banner_step1').slideDown();
+
+	});
+
+	editor.on('change',function() {
+
+		var errors = editor.validate();
+		if(errors.length) {
+
+			$('#validator').removeClass('ok');
+			$('#validator').text('Not valid');
+			$('#validator').addClass('error');
+			$('#generate_btn').addClass('disabled');
+
+		}else{
+
+			$('#validator').removeClass('error');
+			$('#validator').text('Valid');
+			$('#validator').addClass('ok');
+			$('#generate_btn').removeClass('disabled');
+
+		}
+
+	});
+
+	// STEP 3
+	$('#backToStep2').on('click',function() {
+
+		$('#step3').fadeOut();
+		$('#step2').fadeIn();
+
+	});
+
+
+	$('#publish_btn').on('click',function() {
+
+		superagent.post(window.plp.config.provider)
+		.send(localStorage.profile)
+		.set('Content-Type', 'application/json')
+			.end(function(err,provRes){
+				if(provRes.ok) {
+					console.log('yay got ' + JSON.stringify(provRes.body));
+					superagent.post(window.plp.config.directory)
+						.send(provRes.body)
+						.set('Content-Type', 'application/json')
+						.end(function(err,dirRes){
+							console.log(dirRes.body);
+						});
+				} else {
+					console.log('Oh no! error ' + res.text);
+				}
+			});
+
+	});
+
+	// UTILITY FUNCTIONS
+
+	function saveProfile(){
+
+		// Print data in console
+		var data = editor.getValue();
+		console.log(data);
+
+		// Store locally
+		window.localStorage.setItem('profile',JSON.stringify(editor.getValue()));
+
+	}
+
+	function loadProfileIntoEditor(){
+
+		initEditor(window.localStorage.getItem('profile'));
+
+	}
+
+	function enableRemoteStorage(){
+
+		remoteStorage.access.claim('shares', 'rw');
+		remoteStorage.displayWidget();
+
+	}
+
+	function validateURL(value) {
+
+		return /^(https?|ftp):\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i.test(value);
+
+	}
 
 });
