@@ -10,11 +10,13 @@
 		<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
 		<link rel="stylesheet" href="style.css" />
 
-		<script src="bower_components/jquery/dist/jquery.js"></script>
-		<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
-		<script src="bower_components/json-editor/dist/jsoneditor.js"></script>
-		<script src="bower_components/remotestorage/remotestorage.js"></script>
+		<script src="bower_components/jquery/dist/jquery.min.js"></script>
+		<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+		<script src="bower_components/json-editor/dist/jsoneditor.min.js"></script>
+		<script src="bower_components/remotestorage/remotestorage.min.js"></script>
 		<script src="bower_components/superagent/superagent.js"></script>
+		<script src="bower_components/FileSaver/FileSaver.min.js"></script>
+		<script src="bower_components/Blob/Blob.js"></script>
 		<script src="config.js"></script>
 		<script src="app.js"></script>
 
@@ -182,7 +184,13 @@
 									<div class="col-md-2"> <!-- Instructions -->
 
 										<h4>How to use it</h4>
-										<p>Quite easy: Fill out the fields you want.</br></br>Once you are ready, press the button below and get to the final step where you will decide where you store your PLP profile.</p>
+										<p>Quite easy: Select which kind of profile you want to create: For your personal profile, your organization or even for a venue or place. Fill out the fields you want. None of the fields is mandatory.</p>
+										</br>
+										<h4>Only public information</h4>
+										<p>Please, mind that the information you specify will be publicly available.</p>
+										</br>
+										<h4>Ready?</h4>
+										Once you are ready, press the button below and get to the final step where you will decide where you store your PLP profile.</p>
 
 										<hr>
 
@@ -265,9 +273,9 @@
 														</div>
 														<div id="collapseTwo" class="panel-collapse collapse">
 																<div class="panel-body">
-																		<p>Text to be specified here<br></p>
-
-																		<div class="input-group">
+																		<p>Download and store it wherever you want.<br></p>
+																		<a id="step3Option2Btn" class="btn btn-primary">Download</a>
+																		<!-- <div class="input-group">
 
 																			<input id="existing_profile_field" type="text" class="form-control" placeholder="http://">
 
@@ -277,8 +285,7 @@
 
 																			</span>
 
-																		</div>
-
+																		</div> -->
 																</div>
 														</div>
 												</div>

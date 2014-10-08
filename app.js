@@ -227,9 +227,10 @@ $(function(){
 
 	});
 
-	$('#step3Option1Btn').on('click',function() {
+	$('#step3Option2Btn').on('click',function() {
 
-		// What to do here
+		var blob = new Blob([localStorage.profile], {type: "application/ld+json;charset=utf-8"});
+		saveAs(blob, "profile");
 
 	});
 
