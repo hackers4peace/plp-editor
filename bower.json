@@ -18,7 +18,8 @@
     "superagent": "~0.18.2",
     "remotestorage": "~0.10.2",
     "FileSaver": "*",
-    "Blob": "*"
+    "Blob": "*",
+    "node-uuid": "~1.4.1"
   },
   "homepage": "https://github.com/elf-pavlik/plp-generator",
   "ignore": [
