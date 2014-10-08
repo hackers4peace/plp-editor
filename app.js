@@ -46,24 +46,18 @@ $(function(){
 
 	// TABS
 	$("#tabPerson").on('click',function() {
-		initEditor('profileType');
-		$("#tabPerson").addClass('active');
-		$("#tabOrganisation").removeClass('active');
-		$("#tabPlace").removeClass('active');
+		initEditor('Person');
+		selectTab("Person");
 	});
 
-	$("#tabOrganisation").on('click',function() {
+	$("#tabOrganization").on('click',function() {
 		initEditor('Organization');
-		$("#tabPerson").removeClass('active');
-		$("#tabOrganisation").addClass('active');
-		$("#tabPlace").removeClass('active');
+		selectTab("Organization");
 	});
 
 	$("#tabPlace").on('click',function() {
 		initEditor('Place');
-		$("#tabPerson").removeClass('active');
-		$("#tabOrganisation").removeClass('active');
-		$("#tabPlace").addClass('active');
+		selectTab("Place");
 	});
 
 	// STEP 1
@@ -104,9 +98,11 @@ $(function(){
 
 								// TODO test parse profileType (modify provider to store also @type)
 								var profile = JSON.parse(res.body);
+								var type = profile["@type"];
 
-								initEditor(profile["@type"]);
+								initEditor(type);
 								editor.setValue(profile);
+								selectTab(type);
 
 								$('#step1').fadeOut();
 								$('#banner_step1').slideUp();
@@ -235,6 +231,16 @@ $(function(){
 	});
 
 	// UTILITY FUNCTIONS
+
+	function selectTab(profile){
+
+		$("#tabPerson").removeClass('active');
+		$("#tabOrganization").removeClass('active');
+		$("#tabPlace").removeClass('active');
+
+		$("#tab"+profile).addClass('active');
+
+	}
 
 	function profileWithoutId(profile){
 		return delete profile['@id'];
