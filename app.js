@@ -102,10 +102,11 @@ $(function(){
 
 								console.log('Profile correctly downloaded from provider ' + res.body);
 
-								// TODO parse profileType
+								// TODO test parse profileType (modify provider to store also @type)
+								var profile = JSON.parse(res.body);
 
-								initEditor(profileType);
-								editor.setValue(JSON.parse(res.body));
+								initEditor(profile["@type"]);
+								editor.setValue(profile);
 
 								$('#step1').fadeOut();
 								$('#banner_step1').slideUp();
