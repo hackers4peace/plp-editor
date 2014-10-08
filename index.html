@@ -189,16 +189,15 @@
 										</br>
 										<h4>Only public information</h4>
 										<p>Please, mind that the information you specify will be publicly available.</p>
-										</br>
-										<h4>Ready?</h4>
-										Once you are ready, press the button below and get to the final step where you will decide where you store your PLP profile.</p>
+										<!-- </br>
+										<h4>Validity:</h4>
+										<a id="validator"></a> -->
 
 										<hr>
 
-										<span>
-											<a id="toStep3Generate" class="btn btn-primary btn-md">Generate your profile</a>
-											<a id="validator"></a>
-										</span>
+										<h4>Ready?</h4>
+										<p>Once you are ready, press the button below and get to the final step where you will decide where you store your PLP profile.</p>
+										<a id="toStep3Generate" class="btn btn-primary btn-md">Generate your profile</a>
 
 										<hr>
 
@@ -208,11 +207,12 @@
 
 									<div class="col-md-10"> <!-- Editor -->
 
-										<ul class="nav nav-tabs" role="tablist">
-										  <li id="tabPerson" class="active"><a >Person</a></li>
-										  <li id="tabOrganization"><a>Organization</a></li>
-										  <li id="tabPlace"><a>Place</a></li>
-										</ul>
+										<h4>Select profile type: </h4>
+										<div class="btn-group btn-group-lg">
+										  <button id="tabPerson" type="button" class="btn btn-primary active">Person</button>
+										  <button id="tabOrganization" type="button" class="btn btn-primary">Organization</button>
+										  <button id="tabPlace" type="button" class="btn btn-primary">Place</button>
+										</div>
 
 										<div id="editor_holder"></div>
 
@@ -234,7 +234,7 @@
 
 							<div class="row">
 
-								<div class="col-md-7">
+								<div class="col-md-12">
 
 									<div id="banner_step3" class="jumbotron">
 
@@ -242,7 +242,7 @@
 
 											<h1>Done!</h1>
 
-											<p>Now, you have to decide where you want to store your profile data.<br>Following options are available:</p>
+											<p>Now, you can decide where you want to store your profile data.</p>
 
 										</div>
 
@@ -250,65 +250,69 @@
 
 								</div>
 
-								<div class="col-md-5">
+							</div>
 
-									<div class="panel-group" id="accordion">
-												<div id="step3Option1" class="panel panel-primary">
-														<div class="panel-heading">
-																<h4 class="panel-title">
-																		<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">We host it</a>
-																</h4>
-														</div>
-														<div id="collapseOne" class="panel-collapse collapse in">
-																<div class="panel-body">
-																		<p>If you do not know where you can store your profile, we can do it for you! Very easy, click the button below and we will give you the URI to your profile.</p>
-																		<a id="step3Option1Btn" class="btn btn-primary">Host it for me</a>
-																</div>
-														</div>
-												</div>
-												<div id="step3Option2" class="panel panel-primary">
-														<div class="panel-heading">
-																<h4 class="panel-title">
-																		<a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">You download it and choose where to store it yourself.</a>
-																</h4>
-														</div>
-														<div id="collapseTwo" class="panel-collapse collapse">
-																<div class="panel-body">
-																		<p>Download and store it wherever you want.<br></p>
-																		<a id="step3Option2Btn" class="btn btn-primary">Download</a>
-																		<!-- <div class="input-group">
+							<div class="row">
 
-																			<input id="existing_profile_field" type="text" class="form-control" placeholder="http://">
+								<div class="container">
 
-																			<span class="input-group-btn">
-
-																				<button id="step3Option2Btn" class="btn btn-default disabled" type="button">Go!</button>
-
-																			</span>
-
-																		</div> -->
-																</div>
-														</div>
-												</div>
-												<!-- <div id="step3Option3" class="panel panel-primary">
-														<div class="panel-heading">
-																<h4 class="panel-title">
-																		<a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">We store it for you</a>
-																</h4>
-														</div>
-														<div id="collapseThree" class="panel-collapse collapse">
-																<div class="panel-body">
-																		<p>PLP can store the profile for you.  </p>
-
-																		<a id="publish_btn" href="#" class="btn btn-primary btn-lg">Upload profile to provider</a>
-																</div>
-														</div>
-												</div> -->
-										</div>
+									<h4>Following options are available:</h4>
 
 								</div>
 
 							</div>
+
+							<hr>
+
+							<div class="row">
+
+								<div class="col-md-6">
+
+									<div class="panel panel-primary">
+									  <div class="panel-heading">
+									    <h3 class="panel-title">We host it</h3>
+									  </div>
+									  <div class="panel-body">
+									    <p>If you do not know where you can store your profile, we can do it for you! Very easy, click the button below and we will give you the URI to your profile.</p>
+											<a id="step3Option1Btn" class="btn btn-default">Host it for me</a>
+									  </div>
+									</div>
+
+								</div>
+
+								<div class="col-md-6">
+
+									<div class="panel panel-primary">
+										<div class="panel-heading">
+											<h3 class="panel-title">You download it and choose where to store it yourself.</h3>
+										</div>
+										<div class="panel-body">
+											<p>Download and store it wherever you want. You can upload it to your website or favorite cloud storage service.<br></p>
+											<a id="step3Option2Btn" class="btn btn-default">Download</a>
+										</div>
+									</div>
+
+								</div>
+
+								<!-- <div class="col-md-4">
+
+									<div class="panel panel-primary">
+										<div class="panel-heading">
+											<h3 class="panel-title">We host it</h3>
+										</div>
+										<div class="panel-body">
+											<p>If you do not know where you can store your profile, we can do it for you! Very easy, click the button below and we will give you the URI to your profile.</p>
+											<a id="step3Option1Btn" class="btn btn-default">Host it for me</a>
+										</div>
+									</div>
+
+								</div> -->
+
+							</div>
+
+							</div>
+
+							<hr>
 
 							<div class="row">
 
