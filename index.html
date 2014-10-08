@@ -1,77 +1,345 @@
 <!DOCTYPE html>
 <html>
 
-  	<head>
-  
-	    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<head>
 
-		<title>PLP Generator</title>
-		
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+		<title>PLP: Portable Linked Profiles</title>
+
 		<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+		<link rel="stylesheet" href="style.css" />
 
-		<script src="bower_components/jquery/dist/jquery.js"></script>
-		<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
-		<script src="bower_components/json-editor/dist/jsoneditor.js"></script>
-  	</head>
-  
-  	<body>
-  
-    	<div class="row">
-    
-      		<div class="col-md-4 col-md-offset-1">
-      
-        		<h1>Profile editor</h1>
-        
-      		</div>
-      
-    	</div>
-    
-		<div class="row">
-	
-			<div class="col-md-4 col-md-offset-1">
-		
-			  	<h2>What is this?</h2>
-			  	
-			    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam viverra nec consectetur ante hendrerit. Donec et mollis dolor. Praesent et diam eget libero egestas mattis sit amet vitae augue. Nam tincidunt congue enim, ut porta lorem lacinia consectetur.</p>
-			      	
-			    <h2>What is it good for?</h2>
-			    
-			    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam viverra nec consectetur ante hendrerit. Donec et mollis dolor. Praesent et diam eget libero egestas mattis sit amet vitae augue. Nam tincidunt congue enim, ut porta lorem lacinia consectetur.</p>                     	      	
-			  	
-			  	<h2>Spread the word</h2>
-			  	
-			  	<p>Share it on FB / Twitter and so on....</p>
-		  	
+		<script src="bower_components/jquery/dist/jquery.min.js"></script>
+		<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+		<script src="bower_components/json-editor/dist/jsoneditor.min.js"></script>
+		<script src="bower_components/remotestorage/remotestorage.min.js"></script>
+		<script src="bower_components/superagent/superagent.js"></script>
+		<script src="bower_components/FileSaver/FileSaver.min.js"></script>
+		<script src="bower_components/Blob/Blob.js"></script>
+		<script src="config.js"></script>
+		<script src="app.js"></script>
+
+	</head>
+
+	<body>
+
+		<!-- Static navbar -->
+		<div class="navbar navbar-default navbar-static-top" role="navigation">
+
+			<div class="container">
+
+				<div class="navbar-header">
+
+					<a class="navbar-brand" href="index.html">Portable Linked Profiles</a>
+
+				</div>
+
+				<div class="navbar-collapse collapse">
+
+					<ul class="nav navbar-nav">
+
+						<!-- <li class="active"><a id="previousStep" href="#"><</a></li>
+						<li class="active"><a id="nextStep" href="#">></a></li> -->
+
+					</ul>
+
+					<ul class="nav navbar-nav navbar-right">
+
+						<li class="dropdown">
+		          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Code & Documentation <span class="caret"></span></a>
+		          <ul class="dropdown-menu" role="menu">
+		            <li><a href="https://github.com/hackers4peace/plp-docs" target="blank">Docs</a></li>
+		            <li class="divider"></li>
+		            <li><a href="https://github.com/hackers4peace/plp-editor" target="blank">Editor</a></li>
+								<li><a href="https://github.com/hackers4peace/plp-directoy" target="blank">Directory</a></li>
+								<li><a href="https://github.com/hackers4peace/plp-provider" target="blank">Provider</a></li>
+								<li><a href="https://github.com/hackers4peace/plp-browser" target="blank">Browser</a></li>
+		          </ul>
+		        </li>
+					</ul>
+
+				</div><!--/.nav-collapse -->
+
 			</div>
-		
-			<div class="col-md-4 col-md-offset-1">
-		
-				<h2>If you have already one</h2>	    
 
-		    	<form role="form">
-		    
-				 	<div class="form-group">
-				  
-				    	<label for="exampleInputEmail1">Input the URL where you have stored it. File will be parsed and editor initialised with data stored on it.</label>
-				    
-				    	<input type="text" class="form-control" id="profile_url" placeholder="http://">
-				    
-				  	</div>				  
-				  
-				  	<button type="submit" class="btn btn-primary btn-lg">Edit</button>
-				  
-				  	<h2>If not, create one</h2>
-				
-				  	<p>This takes you to the profile creator</p>									
-					
-				  	<a id="create_btn" href="creator.html" class="btn btn-primary btn-lg">Create or edit your profile</a>
-			  
-				</form>						
-		
-			</div>				
-	 	  	
-		</div>        
-    
-  	</body>
-  
+		</div>
+
+		<div class="container container-fluid">
+
+			<div class="row"> <!-- content -->
+
+				<div id="step1"> <!-- step1 -->
+
+					<div id="banner_step1" class="jumbotron">
+
+						<div class="container">
+
+							<h1>Take control of your profile data</h1>
+
+							<p>Tired of registering on dozens of different web services having to type the same information repeatedly?</br>Not happy with big corporations doing evil with your data?</br>You own your data, cause is yours.</p>
+
+							<hr>
+
+						</div>
+
+					</div>
+
+					<div class="container">
+
+						<div class="row">
+
+							<div class="col-md-3"> <!-- texting -->
+
+								<h4>You decide where you want it</h4>
+
+								<p>It's your data, so you should have the control of it, right? PLP (Portable Linked Profiles) offers you the possibility to compose and fully manage your basic profile information.</br></br>Please note that the information we are speaking about is public information. That means your contact data, interests, the projects you participate on, the company you work for, etc... Nothing you would like to hide from others.</p>
+
+							</div>
+
+							<div class="col-md-3"> <!-- texting -->
+
+								<h4>For users and developers</h4>
+
+								<p>This editor is fairly easy to use for anyone willing to compose or edit profile information. This data can be then linked to applications supporting the PLP pattern.</br></br>These applications can be listings, directories or whatever service making use of this information. Thanks to it's modularity, coders can easily create applications on top of PLP Profiles. You might want to take a look at <a href="https://github.com/hackers4peace/plp-docs">the documentation</a> if you want to discover which services use PLP.</p>
+
+							</div>
+
+							<div class="col-md-3"> <!-- texting -->
+
+								<h4>Open Source and designed to be extended</h4>
+
+								<p>Are you writing a web-app or service that aggregates profile information? Do you need a quick, easy and efficient way for your users to register on your platform? PLP addresses this scenario. PLP is not only composed by <a href="https://github.com/hackers4peace/plp-editor">Editors</a> like this. Actually, several components such as <a href="https://github.com/hackers4peace/plp-provider">Providers</a>, <a href="https://github.com/hackers4peace/plp-directory">Directories</a> or <a href="https://github.com/hackers4peace/plp-browser">Browsers</a> have been defined in a re-usable manner for you to build upon them.</br></br>Are you a software developer? Feeling like collaborating on the extension of PLP? Feel free to browse, clone, comment and fiddle around the code. Everything is on <a href="https://github.com/hackers4peace/plp-docs">Github</a></p>
+
+							</div>
+
+							<div class="col-md-3">
+
+								<div class="panel panel-primary">
+
+									<div class="panel-heading">
+
+										<h4>Create your profile now!</h4>
+
+									</div>
+
+									<div class="panel-body">
+
+										<p>It will take you just 5 minutes.</p>
+
+										<p><a id="toStep2Create" class="btn btn-success btn-lg" role="button">Open profile editor</a></p>
+
+									</div>
+
+								</div>
+
+								<hr>
+
+								<div class="panel panel-default">
+
+									<div class="panel-heading">
+
+										<h4>Already have one?</h4>
+
+									</div>
+
+									<div class="panel-body">
+
+										<p>In that case, you can input the URL where your Profile is stored, editor will then be initialised so you can edit it</p>
+
+										<div class="input-group">
+
+											<input id="existing_profile_field" type="text" class="form-control" placeholder="http://">
+
+											<span class="input-group-btn">
+
+												<button id="toStep2Edit" class="btn btn-default disabled" type="button">Go!</button>
+
+											</span>
+
+										</div>
+
+									</div>
+
+								</div>
+
+							</div>
+
+						</div>
+
+					</div>
+
+				</div> <!-- step1 -->
+
+				<div id="step2" class="hidden"> <!-- step2 -->
+
+					<div class="container">
+
+						<div class="row">
+
+							<div class="container container-fluid">
+
+								<div class="row"> <!-- Instructions & Editor -->
+
+									<div class="col-md-2"> <!-- Instructions -->
+
+										<h4>How to use it</h4>
+										<p>Quite easy: Select which kind of profile you want to create: For your personal profile, your organization or even for a venue or place. Fill out the fields you want. None of the fields is mandatory.</p>
+										</br>
+										<h4>Only public information</h4>
+										<p>Please, mind that the information you specify will be publicly available.</p>
+										</br>
+										<h4>Ready?</h4>
+										Once you are ready, press the button below and get to the final step where you will decide where you store your PLP profile.</p>
+
+										<hr>
+
+										<span>
+											<a id="toStep3Generate" class="btn btn-primary btn-md">Generate your profile</a>
+											<a id="validator"></a>
+										</span>
+
+										<hr>
+
+										<a id="backToStep1" class="btn btn-default btn-md">Back</a>
+
+									</div> <!-- Instructions -->
+
+									<div class="col-md-10"> <!-- Editor -->
+
+										<ul class="nav nav-tabs" role="tablist">
+										  <li id="tabPerson" class="active"><a >Person</a></li>
+										  <li id="tabOrganisation"><a>Organization</a></li>
+										  <li id="tabPlace"><a>Place</a></li>
+										</ul>
+
+										<div id="editor_holder"></div>
+
+									</div> <!-- Editor -->
+
+								</div> <!-- Instructions & Editor -->
+
+							</div>
+
+						</div>
+
+					</div>
+
+				</div> <!-- step2 -->
+
+				<div id="step3" class="hidden">
+
+					<div class="container">
+
+							<div class="row">
+
+								<div class="col-md-7">
+
+									<div id="banner_step3" class="jumbotron">
+
+										<div class="container">
+
+											<h1>Done!</h1>
+
+											<p>Now, you have to decide where you want to store your profile data.<br>Following options are available:</p>
+
+										</div>
+
+									</div>
+
+								</div>
+
+								<div class="col-md-5">
+
+									<div class="panel-group" id="accordion">
+												<div id="step3Option1" class="panel panel-primary">
+														<div class="panel-heading">
+																<h4 class="panel-title">
+																		<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">We host it</a>
+																</h4>
+														</div>
+														<div id="collapseOne" class="panel-collapse collapse in">
+																<div class="panel-body">
+																		<p>If you do not know where you can store your profile, we can do it for you! Very easy, click the button below and we will give you the URI to your profile.</p>
+																		<a id="step3Option1Btn" class="btn btn-primary">Host it for me</a>
+																</div>
+														</div>
+												</div>
+												<div id="step3Option2" class="panel panel-primary">
+														<div class="panel-heading">
+																<h4 class="panel-title">
+																		<a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">You download it and choose where to store it yourself.</a>
+																</h4>
+														</div>
+														<div id="collapseTwo" class="panel-collapse collapse">
+																<div class="panel-body">
+																		<p>Download and store it wherever you want.<br></p>
+																		<a id="step3Option2Btn" class="btn btn-primary">Download</a>
+																		<!-- <div class="input-group">
+
+																			<input id="existing_profile_field" type="text" class="form-control" placeholder="http://">
+
+																			<span class="input-group-btn">
+
+																				<button id="step3Option2Btn" class="btn btn-default disabled" type="button">Go!</button>
+
+																			</span>
+
+																		</div> -->
+																</div>
+														</div>
+												</div>
+												<!-- <div id="step3Option3" class="panel panel-primary">
+														<div class="panel-heading">
+																<h4 class="panel-title">
+																		<a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">We store it for you</a>
+																</h4>
+														</div>
+														<div id="collapseThree" class="panel-collapse collapse">
+																<div class="panel-body">
+																		<p>PLP can store the profile for you.  </p>
+
+																		<a id="publish_btn" href="#" class="btn btn-primary btn-lg">Upload profile to provider</a>
+																</div>
+														</div>
+												</div> -->
+										</div>
+
+								</div>
+
+							</div>
+
+							<div class="row">
+
+								<div class="container">
+
+									<h4>Still want to do some corrections?</h4>
+									<a id="backToStep2" class="btn btn-default">Go Back</a>
+
+								</div>
+
+							</div>
+
+						</div> <!-- /container -->
+
+				</div> <!-- step3 --><!-- content --> <!-- content -->
+
+			</div> <!-- content -->
+
+			<hr>
+
+			<div class="footer footer-static-bottom">
+
+			  <div class="container">
+
+				<p class="text-muted">The PLP (Portable Linked Profiles) is based on Open Web Standards, Common Vocabularies and Open Source technologies. <a href="https://github.com/hackers4peace/plp-docs">Read the docs</a> . <a href="http://creativecommons.org/about/cc0"> CCO - No rights reserved</a> </p>
+
+			  </div>
+
+			</div>
+
+		</div>
+
+	</body>
+
 </html>
