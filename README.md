@@ -1,6 +1,8 @@
 # PLP App: Editor
 
-Portable Linked Profile Editor. This repo will host definitions and implementations for Editors working with PLP 
+HTML5 app providing human interface to create and edit [Portable Linked
+Profiles](https://github.com/hackers4peace/plp-docs) + listing them in [PLP
+Directory](https://github.com/hackers4peace/plp-directory)
 
 ## About
 
@@ -33,6 +35,18 @@ directory)
 ```bash
 $ bower install
 ```
+
+## Development
+
+You need to serve it using some simple http server, for example
+[serve](http://npm.im/serve) or from root of this repo:
+
+```py
+$ python -m SimpleHTTPServer
+```
+
+
+
 
 ## Unlicense
 
