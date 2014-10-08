@@ -10,7 +10,7 @@ $(function(){
 	var profileType = 'Person';
 
 	//Initialize the editor
-	function initEditor(type){
+	function initEditor(type,profile){
 
 		profileType = type;
 
@@ -37,6 +37,8 @@ $(function(){
 					$('#generate_btn').removeClass('disabled');
 
 				}
+
+				editor.setValue(profile);
 
 			});
 
@@ -100,8 +102,7 @@ $(function(){
 								var profile = JSON.parse(res.body);
 								var type = profile["@type"];
 
-								initEditor(type);
-								editor.setValue(profile);
+								initEditor(type,profile);
 								selectTab(type);
 
 								$('#step1').fadeOut();
