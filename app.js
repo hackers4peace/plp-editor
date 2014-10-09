@@ -85,6 +85,7 @@ $(function(){
 		if (validateURL(url)){
 
 			superagent.get(url)
+        .accept('application/ld+json')
 				.end(function(err,res){
 
 						if (err){
@@ -98,10 +99,12 @@ $(function(){
 
 							if(res.ok) {
 
-								console.log('Profile correctly downloaded from provider ' + res.body);
+								console.log('Profile correctly downloaded from provider ' + res.text);
+
+								var profile = JSON.parse(res.text);
+
 
 								// TODO test parse profileType (modify provider to store also @type)
-								var profile = JSON.parse(res.body);
 								var type = profile["@type"];
 
 								initEditor(type,profile);
@@ -179,8 +182,9 @@ $(function(){
 	$('#step3Option1Btn').on('click',function() {
 
 		superagent.post(window.plp.config.provider)
-		.send(localStorage.profile)
-		.set('Content-Type', 'application/json')
+      .type('application/ld+json')
+      .accept('application/ld+json')
+      .send(localStorage.profile)
 			.end(function(err,provRes){
 
 				if (err){
@@ -191,15 +195,18 @@ $(function(){
 
 					if(provRes.ok) {
 
-						console.log('Profile successfully pushed to provider ' + JSON.stringify(provRes.body));
+						console.log('Profile successfully pushed to provider ' + provRes.text);
+            // FIXME: handle errors
+            var profile = JSON.parse(provRes.text);
 
-						$('#banner_step3').html('<h1>Your profile lives here:</h1><h3>'+provRes.body['@id']+'</h3><p>You can use this URI for listing it in the different <a href="https://github.com/hackers4peace/plp-docs">directories supporting PLP</a></p>');
+						$('#banner_step3').html('<h1>Your profile lives here:</h1><h3>'+profile['@id']+'</h3><p>You can use this URI for listing it in the different <a href="https://github.com/hackers4peace/plp-docs">directories supporting PLP</a></p>');
 
 						if (window.plp.config.directory){
 
 							superagent.post(window.plp.config.directory)
-								.send(provRes.body)
-								.set('Content-Type', 'application/json')
+								.type('application/ld+json')
+								.accept('application/ld+json')
+								.send(JSON.stringify(profile))
 								.end(function(err,dirRes){
 
 									if (err){
@@ -210,7 +217,7 @@ $(function(){
 
 									if (dirRes.ok){
 
-										console.log('Profile succesfully listed in directory ' + JSON.stringify(dirRes.body));
+										console.log('Profile succesfully listed in directory ' + dirRes.text);
 
 									}
 

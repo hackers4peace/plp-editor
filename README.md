@@ -41,7 +41,7 @@ $ bower install
 You need to serve it using some simple http server, for example
 [serve](http://npm.im/serve) or from root of this repo:
 
-```py
+```shell
 $ python -m SimpleHTTPServer
 ```
 
