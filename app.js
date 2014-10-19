@@ -200,7 +200,7 @@ $(function(){
             // FIXME: handle errors
             var profile = JSON.parse(provRes.text);
 
-						$('#result-uri').html('<h1>Your profile lives here:</h1><h3>'+provRes.body['@id']+'</h3><p>You can use this URI for listing it in the different <a href="https://github.com/hackers4peace/plp-docs">directories supporting PLP</a></p>');
+						$('#result-uri').html('<h1>Your profile lives here:</h1><h3>'+profile['@id']+'</h3><p>You can use this URI for listing it in the different <a href="https://github.com/hackers4peace/plp-docs">directories supporting PLP</a></p>');
 
 						if (window.plp.config.directory){
 
