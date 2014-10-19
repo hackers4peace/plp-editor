@@ -185,6 +185,7 @@ $(function(){
 
 				if (err){
 
+					$('#result-uri').html('<p class="error">Something went wrong: '+err+'</p>');	
 					console.log('Error ' + err);
 
 				}else{
@@ -193,7 +194,7 @@ $(function(){
 
 						console.log('Profile successfully pushed to provider ' + JSON.stringify(provRes.body));
 
-						$('#banner_step3').html('<h1>Your profile lives here:</h1><h3>'+provRes.body['@id']+'</h3><p>You can use this URI for listing it in the different <a href="https://github.com/hackers4peace/plp-docs">directories supporting PLP</a></p>');
+						$('#result-uri').html('<h1>Your profile lives here:</h1><h3>'+provRes.body['@id']+'</h3><p>You can use this URI for listing it in the different <a href="https://github.com/hackers4peace/plp-docs">directories supporting PLP</a></p>');
 
 						if (window.plp.config.directory){
 
