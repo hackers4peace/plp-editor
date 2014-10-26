@@ -38,11 +38,11 @@ $(function(){
 
 				}
 
-				if (profile){
-					editor.setValue(profile);
-				}
-
 			});
+
+			if (profile){
+				editor.setValue(profile);
+			}
 
 		});
 
@@ -85,7 +85,7 @@ $(function(){
 		if (validateURL(url)){
 
 			superagent.get(url)
-        .accept('application/ld+json')
+				.accept('application/ld+json')
 				.end(function(err,res){
 
 						if (err){
@@ -102,7 +102,6 @@ $(function(){
 								console.log('Profile correctly downloaded from provider ' + res.text);
 
 								var profile = JSON.parse(res.text);
-
 
 								// TODO test parse profileType (modify provider to store also @type)
 								var type = profile["@type"];
@@ -182,9 +181,9 @@ $(function(){
 	$('#step3Option1Btn').on('click',function() {
 
 		superagent.post(window.plp.config.provider)
-      .type('application/ld+json')
-      .accept('application/ld+json')
-      .send(localStorage.profile)
+			.type('application/ld+json')
+			.accept('application/ld+json')
+			.send(localStorage.profile)
 			.end(function(err,provRes){
 
 				if (err){
@@ -197,8 +196,8 @@ $(function(){
 					if(provRes.ok) {
 
 						console.log('Profile successfully pushed to provider ' + provRes.text);
-            // FIXME: handle errors
-            var profile = JSON.parse(provRes.text);
+						// FIXME: handle errors
+						var profile = JSON.parse(provRes.text);
 
 						$('#result-uri').html('<h1>Your profile lives here:</h1><h3>'+profile['@id']+'</h3><p>You can use this URI for listing it in the different <a href="https://github.com/hackers4peace/plp-docs">directories supporting PLP</a></p>');
 
@@ -261,13 +260,13 @@ $(function(){
 
 	function saveProfile(){
 
-		var data = editor.getValue();
-		data["@context"] = window.plp.config.context;
-		data["@type"] = profileType;
+		var editorValue = editor.getValue();
+		editorValue["@type"] = profileType;
+		editorValue["@context"] = window.plp.config.context;
 
-		console.log(data);
-
-		window.localStorage.setItem('profile',JSON.stringify(editor.getValue()));
+		var profile = JSON.stringify(editorValue);
+		window.localStorage.setItem('profile', profile);
+		console.log("Profile stored in localStorage " + profile);
 
 	}
 
