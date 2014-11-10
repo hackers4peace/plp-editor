@@ -187,43 +187,44 @@ $(function(){
       .end(function(err,provRes){
 
         if (err){
-
           $('#result-uri').html('<p class="error">Something went wrong: '+err+'</p>');
           console.log('Error ' + err);
 
         }else{
 
-          if(provRes.ok) {
+          if (provRes.status == 409){
 
-            console.log('Profile successfully pushed to provider ' + provRes.text);
-            // FIXME: handle errors
-            var profile = JSON.parse(provRes.text);
+            superagent.put(window.plp.config.provider)
+              .type('application/ld+json')
+              .accept('application/ld+json')
+              .send(localStorage.profile)
+              .end(function(err,provRes){
 
-            $('#result-uri').html('<h1>Your profile lives here:</h1><h3>'+profile['@id']+'</h3><p>You can use this URI for listing it in the different <a href="https://github.com/hackers4peace/plp-docs">directories supporting PLP</a></p>');
+                if (err){
+                  $('#result-uri').html('<p class="error">Something went wrong: '+err+'</p>');
+                  console.log('Error ' + err);
 
-            if (window.plp.config.directory){
+                }else{
 
-              superagent.post(window.plp.config.directory)
-                .type('application/ld+json')
-                .accept('application/ld+json')
-                .send(JSON.stringify(profile))
-                .end(function(err,dirRes){
+                  // FIXME: handle errors
+                  console.log('Profile successfully pushed to provider ' + provRes.text);
+                  var profile = JSON.parse(provRes.text);
+                  postProfileToDirectory();
 
-                  if (err){
+                  $('#result-uri').html('<h1>Your profile lives here:</h1><h3>'+profile['@id']+'</h3><p>You can use this URI for listing it in the different <a href="https://github.com/hackers4peace/plp-docs">directories supporting PLP</a></p>');
 
-                    console.log('Error ' + err);
-
-                  }
-
-                  if (dirRes.ok){
-
-                    console.log('Profile succesfully listed in directory ' + dirRes.text);
-
-                  }
+                }
 
               });
 
-            }
+          }else if(provRes.ok) {
+
+            // FIXME: handle errors
+            console.log('Profile successfully pushed to provider ' + provRes.text);
+            var profile = JSON.parse(provRes.text);
+            postProfileToDirectory();
+
+            $('#result-uri').html('<h1>Your profile lives here:</h1><h3>'+profile['@id']+'</h3><p>You can use this URI for listing it in the different <a href="https://github.com/hackers4peace/plp-docs">directories supporting PLP</a></p>');
 
           }
 
@@ -232,6 +233,32 @@ $(function(){
       });
 
   });
+
+  function postProfileToDirectory(){
+
+    if (window.plp.config.directory){
+
+      superagent.post(window.plp.config.directory)
+        .type('application/ld+json')
+        .accept('application/ld+json')
+        .send(JSON.stringify(profile))
+        .end(function(err,dirRes){
+
+          if (err){
+            console.log('Error ' + err);
+          }else{
+            if (dirRes.status == 409){
+              console.log('Profile was already listed in directory ' + dirRes.text);
+            }else if (dirRes.ok){
+              console.log('Profile succesfully listed in directory ' + dirRes.text);
+            }
+          }
+
+      });
+
+    }
+
+  }
 
   $('#step3Option2Btn').on('click',function() {
 
