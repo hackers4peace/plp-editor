@@ -1,13 +1,13 @@
 .hidden{
-	visibility: none;
+  visibility: none;
 }
 
 .error{
 
-	color: red;
+  color: red;
 }
 
 .ok{
 
-	color: green;
+  color: green;
 }

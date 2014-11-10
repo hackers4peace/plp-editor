@@ -1,286 +1,286 @@
 $(function(){
 
-	// Set default options
-	JSONEditor.defaults.options.theme = 'bootstrap3';
-	JSONEditor.defaults.options.disable_collapse = true;
-	JSONEditor.defaults.options.disable_edit_json = true;
-	JSONEditor.defaults.options.disable_properties = true;
+  // Set default options
+  JSONEditor.defaults.options.theme = 'bootstrap3';
+  JSONEditor.defaults.options.disable_collapse = true;
+  JSONEditor.defaults.options.disable_edit_json = true;
+  JSONEditor.defaults.options.disable_properties = true;
 
-	var editor;
-	var profileType = 'Person';
+  var editor;
+  var profileType = 'Person';
 
-	//Initialize the editor
-	function initEditor(type,profile){
+  //Initialize the editor
+  function initEditor(type,profile){
 
-		profileType = type;
+    profileType = type;
 
-		$.getJSON('schemas/'+profileType+'.json', function(json){
+    $.getJSON('schemas/'+profileType+'.json', function(json){
 
-			document.getElementById('editor_holder').innerHTML = "";
-			editor = new JSONEditor(document.getElementById('editor_holder'),json);
+      document.getElementById('editor_holder').innerHTML = "";
+      editor = new JSONEditor(document.getElementById('editor_holder'),json);
 
-			editor.on('change',function() {
+      editor.on('change',function() {
 
-				var errors = editor.validate();
-				if(errors.length) {
+        var errors = editor.validate();
+        if(errors.length) {
 
-					$('#validator').removeClass('ok');
-					$('#validator').text('Not valid');
-					$('#validator').addClass('error');
-					$('#generate_btn').addClass('disabled');
+          $('#validator').removeClass('ok');
+          $('#validator').text('Not valid');
+          $('#validator').addClass('error');
+          $('#generate_btn').addClass('disabled');
 
-				}else{
+        }else{
 
-					$('#validator').removeClass('error');
-					$('#validator').text('Valid');
-					$('#validator').addClass('ok');
-					$('#generate_btn').removeClass('disabled');
+          $('#validator').removeClass('error');
+          $('#validator').text('Valid');
+          $('#validator').addClass('ok');
+          $('#generate_btn').removeClass('disabled');
 
-				}
+        }
 
-			});
+      });
 
-			if (profile){
-				editor.setValue(profile);
-			}
+      if (profile){
+        editor.setValue(profile);
+      }
 
-		});
+    });
 
-	}
+  }
 
-	// TABS
-	$("#tabPerson").on('click',function() {
-		initEditor('Person');
-		selectProfileType("Person");
-	});
+  // TABS
+  $("#tabPerson").on('click',function() {
+    initEditor('Person');
+    selectProfileType("Person");
+  });
 
-	$("#tabOrganization").on('click',function() {
-		initEditor('Organization');
-		selectProfileType("Organization");
-	});
+  $("#tabOrganization").on('click',function() {
+    initEditor('Organization');
+    selectProfileType("Organization");
+  });
 
-	$("#tabPlace").on('click',function() {
-		initEditor('Place');
-		selectProfileType("Place");
-	});
+  $("#tabPlace").on('click',function() {
+    initEditor('Place');
+    selectProfileType("Place");
+  });
 
-	// STEP 1
+  // STEP 1
 
-	// new profile btn
-	$('#toStep2Create').on('click',function() {
+  // new profile btn
+  $('#toStep2Create').on('click',function() {
 
-		initEditor(profileType);
+    initEditor(profileType);
 
-		$('#step1').fadeOut();
-		$('#banner_step1').slideUp();
-		$('#step2').removeClass('hidden');
-		$('#step2').fadeIn();
+    $('#step1').fadeOut();
+    $('#banner_step1').slideUp();
+    $('#step2').removeClass('hidden');
+    $('#step2').fadeIn();
 
-	});
+  });
 
-	$('#toStep2Edit').on('click',function() {
+  $('#toStep2Edit').on('click',function() {
 
-		var url = $('#existing_profile_field').val();
+    var url = $('#existing_profile_field').val();
 
-		if (validateURL(url)){
+    if (validateURL(url)){
 
-			superagent.get(url)
-				.accept('application/ld+json')
-				.end(function(err,res){
+      superagent.get(url)
+        .accept('application/ld+json')
+        .end(function(err,res){
 
-						if (err){
+            if (err){
 
-							console.log('Error ' + err);
+              console.log('Error ' + err);
 
-							$('#existing_profile_field').val('Something went wrong');
-							$('#existing_profile_field').addClass('error');
+              $('#existing_profile_field').val('Something went wrong');
+              $('#existing_profile_field').addClass('error');
 
-						}else{
+            }else{
 
-							if(res.ok) {
+              if(res.ok) {
 
-								console.log('Profile correctly downloaded from provider ' + res.text);
+                console.log('Profile correctly downloaded from provider ' + res.text);
 
-								var profile = JSON.parse(res.text);
+                var profile = JSON.parse(res.text);
 
-								// TODO test parse profileType (modify provider to store also @type)
-								var type = profile["@type"];
+                // TODO test parse profileType (modify provider to store also @type)
+                var type = profile["@type"];
 
-								initEditor(type,profile);
-								selectProfileType(type);
+                initEditor(type,profile);
+                selectProfileType(type);
 
-								$('#step1').fadeOut();
-								$('#banner_step1').slideUp();
-								$('#step2').removeClass('hidden');
-								$('#step2').fadeIn();
+                $('#step1').fadeOut();
+                $('#banner_step1').slideUp();
+                $('#step2').removeClass('hidden');
+                $('#step2').fadeIn();
 
-							}
+              }
 
-						}
+            }
 
-				 });
+         });
 
-		}else{
+    }else{
 
-			$('#toStep2Edit').addClass('disabled');
+      $('#toStep2Edit').addClass('disabled');
 
-		}
+    }
 
-	});
+  });
 
-	$('#existing_profile_field').on('input',function() {
+  $('#existing_profile_field').on('input',function() {
 
-		var url = $('#existing_profile_field').val();
+    var url = $('#existing_profile_field').val();
 
-		if (validateURL(url)){
+    if (validateURL(url)){
 
-			$('#toStep2Edit').removeClass('disabled');
+      $('#toStep2Edit').removeClass('disabled');
 
-		}else{
+    }else{
 
-			$('#toStep2Edit').addClass('disabled');
+      $('#toStep2Edit').addClass('disabled');
 
-		}
+    }
 
-	});
+  });
 
-	// STEP 2
+  // STEP 2
 
-	$('#toStep3Generate').on('click',function() {
+  $('#toStep3Generate').on('click',function() {
 
-		// Validate
-		var errors = editor.validate();
-		if(!errors.length) {
+    // Validate
+    var errors = editor.validate();
+    if(!errors.length) {
 
-			saveProfile();
+      saveProfile();
 
-			$('#step2').fadeOut();
-			$('#step3').removeClass('hidden');
-			$('#step3').fadeIn();
+      $('#step2').fadeOut();
+      $('#step3').removeClass('hidden');
+      $('#step3').fadeIn();
 
-		}
+    }
 
-	});
+  });
 
-	$('#backToStep1').on('click',function() {
+  $('#backToStep1').on('click',function() {
 
-		$('#step2').fadeOut();
-		$('#step1').fadeIn();
-		$('#banner_step1').slideDown();
+    $('#step2').fadeOut();
+    $('#step1').fadeIn();
+    $('#banner_step1').slideDown();
 
-	});
+  });
 
-	// STEP 3
-	$('#backToStep2').on('click',function() {
+  // STEP 3
+  $('#backToStep2').on('click',function() {
 
-		$('#step3').fadeOut();
-		$('#step2').fadeIn();
+    $('#step3').fadeOut();
+    $('#step2').fadeIn();
 
-	});
+  });
 
-	$('#step3Option1Btn').on('click',function() {
+  $('#step3Option1Btn').on('click',function() {
 
-		superagent.post(window.plp.config.provider)
-			.type('application/ld+json')
-			.accept('application/ld+json')
-			.send(localStorage.profile)
-			.end(function(err,provRes){
+    superagent.post(window.plp.config.provider)
+      .type('application/ld+json')
+      .accept('application/ld+json')
+      .send(localStorage.profile)
+      .end(function(err,provRes){
 
-				if (err){
+        if (err){
 
-					$('#result-uri').html('<p class="error">Something went wrong: '+err+'</p>');
-					console.log('Error ' + err);
+          $('#result-uri').html('<p class="error">Something went wrong: '+err+'</p>');
+          console.log('Error ' + err);
 
-				}else{
+        }else{
 
-					if(provRes.ok) {
+          if(provRes.ok) {
 
-						console.log('Profile successfully pushed to provider ' + provRes.text);
-						// FIXME: handle errors
-						var profile = JSON.parse(provRes.text);
+            console.log('Profile successfully pushed to provider ' + provRes.text);
+            // FIXME: handle errors
+            var profile = JSON.parse(provRes.text);
 
-						$('#result-uri').html('<h1>Your profile lives here:</h1><h3>'+profile['@id']+'</h3><p>You can use this URI for listing it in the different <a href="https://github.com/hackers4peace/plp-docs">directories supporting PLP</a></p>');
+            $('#result-uri').html('<h1>Your profile lives here:</h1><h3>'+profile['@id']+'</h3><p>You can use this URI for listing it in the different <a href="https://github.com/hackers4peace/plp-docs">directories supporting PLP</a></p>');
 
-						if (window.plp.config.directory){
+            if (window.plp.config.directory){
 
-							superagent.post(window.plp.config.directory)
-								.type('application/ld+json')
-								.accept('application/ld+json')
-								.send(JSON.stringify(profile))
-								.end(function(err,dirRes){
+              superagent.post(window.plp.config.directory)
+                .type('application/ld+json')
+                .accept('application/ld+json')
+                .send(JSON.stringify(profile))
+                .end(function(err,dirRes){
 
-									if (err){
+                  if (err){
 
-										console.log('Error ' + err);
+                    console.log('Error ' + err);
 
-									}
+                  }
 
-									if (dirRes.ok){
+                  if (dirRes.ok){
 
-										console.log('Profile succesfully listed in directory ' + dirRes.text);
+                    console.log('Profile succesfully listed in directory ' + dirRes.text);
 
-									}
+                  }
 
-							});
+              });
 
-						}
+            }
 
-					}
+          }
 
-				}
+        }
 
-			});
+      });
 
-	});
+  });
 
-	$('#step3Option2Btn').on('click',function() {
+  $('#step3Option2Btn').on('click',function() {
 
-		var profile = localStorage.profile;
-		var filename = "urn:uuid"+uuid.v4();
-		var blob = new Blob([profile], {type: "application/ld+json;charset=utf-8"});
-		saveAs(blob, filename+".json");
+    var profile = localStorage.profile;
+    var filename = "urn:uuid"+uuid.v4();
+    var blob = new Blob([profile], {type: "application/ld+json;charset=utf-8"});
+    saveAs(blob, filename+".json");
 
-	});
+  });
 
-	// UTILITY FUNCTIONS
+  // UTILITY FUNCTIONS
 
-	function selectProfileType(profile){
+  function selectProfileType(profile){
 
-		$("#tabPerson").removeClass('active');
-		$("#tabOrganization").removeClass('active');
-		$("#tabPlace").removeClass('active');
+    $("#tabPerson").removeClass('active');
+    $("#tabOrganization").removeClass('active');
+    $("#tabPlace").removeClass('active');
 
-		$("#tab"+profile).addClass('active');
+    $("#tab"+profile).addClass('active');
 
-	}
+  }
 
-	function profileWithoutId(profile){
-		return delete profile['@id'];
-	}
+  function profileWithoutId(profile){
+    return delete profile['@id'];
+  }
 
-	function saveProfile(){
+  function saveProfile(){
 
-		var editorValue = editor.getValue();
-		editorValue["@type"] = profileType;
-		editorValue["@context"] = window.plp.config.context;
+    var editorValue = editor.getValue();
+    editorValue["@type"] = profileType;
+    editorValue["@context"] = window.plp.config.context;
 
-		var profile = JSON.stringify(editorValue);
-		window.localStorage.setItem('profile', profile);
-		console.log("Profile stored in localStorage " + profile);
+    var profile = JSON.stringify(editorValue);
+    window.localStorage.setItem('profile', profile);
+    console.log("Profile stored in localStorage " + profile);
 
-	}
+  }
 
-	function enableRemoteStorage(){
+  function enableRemoteStorage(){
 
-		remoteStorage.access.claim('shares', 'rw');
-		remoteStorage.displayWidget();
+    remoteStorage.access.claim('shares', 'rw');
+    remoteStorage.displayWidget();
 
-	}
+  }
 
-	function validateURL(value) {
+  function validateURL(value) {
 
-		return /^(https?|ftp):\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i.test(value);
+    return /^(https?|ftp):\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i.test(value);
 
-	}
+  }
 
 });
