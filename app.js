@@ -180,19 +180,20 @@ $(function(){
 
   $('#step3Option1Btn').on('click',function() {
 
-    if (profileHasId(JSON.parse(localStorage.profile))){
+    var profile = JSON.parse(localStorage.profile);
 
-      superagent.put(window.plp.config.provider)
+    if (profileHasId(profile)){
+
+      superagent.put(profile["@id"])
       .type('application/ld+json')
       .accept('application/ld+json')
       .send(localStorage.profile)
       .end(function(err,provRes){
 
         if (err){
-          $('#result-uri').html('<p class="error">Something went wrong: '+err+'</p>');
-          console.log('Error ' + err);
+          showProfilePublishedError();
         }else if(provRes.ok) {
-          postProfileToDirectory(JSON.parse(provRes.text));
+          showProfilePublishedOk(profile["@id"]);
         }
 
       });
@@ -206,8 +207,7 @@ $(function(){
       .end(function(err,provRes){
 
         if (err){
-          $('#result-uri').html('<p class="error">Something went wrong: '+err+'</p>');
-          console.log('Error ' + err);
+          showProfilePublishedError();
         }else if(provRes.ok) {
           postProfileToDirectory(JSON.parse(provRes.text));
         }
@@ -225,6 +225,13 @@ $(function(){
   });
 
   // UTILITY FUNCTIONS
+  function showProfilePublishedError(){
+    $('#result-uri').html('<p class="error">Something went wrong: '+err+'</p>');
+  }
+
+  function showProfilePublishedOk(profileUri){
+    $('#result-uri').html('<h1>Your profile lives here:</h1><h3>'+profileUri+'</h3><p>You can use this URI for listing it in the different <a href="https://github.com/hackers4peace/plp-docs">directories supporting PLP</a></p>');
+  }
 
   function downloadLocallyStoredProfile(){
     var profile = localStorage.profile;
@@ -255,7 +262,7 @@ $(function(){
             }else if (dirRes.ok){
               console.log('Profile succesfully listed in directory ' + dirRes.text);
             }
-            $('#result-uri').html('<h1>Your profile lives here:</h1><h3>'+profile['@id']+'</h3><p>You can use this URI for listing it in the different <a href="https://github.com/hackers4peace/plp-docs">directories supporting PLP</a></p>');
+            showProfilePublishedOk(profile["@id"]);
           }
 
       });
