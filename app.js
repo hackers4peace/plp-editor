@@ -180,7 +180,9 @@ $(function(){
 
   $('#step3Option1Btn').on('click',function() {
 
-    superagent.post(window.plp.config.provider)
+    if (profileHasId(JSON.parse(localStorage.profile))){
+
+      superagent.put(window.plp.config.provider)
       .type('application/ld+json')
       .accept('application/ld+json')
       .send(localStorage.profile)
@@ -189,52 +191,53 @@ $(function(){
         if (err){
           $('#result-uri').html('<p class="error">Something went wrong: '+err+'</p>');
           console.log('Error ' + err);
-
-        }else{
-
-          if (provRes.status == 409){
-
-            superagent.put(window.plp.config.provider)
-              .type('application/ld+json')
-              .accept('application/ld+json')
-              .send(localStorage.profile)
-              .end(function(err,provRes){
-
-                if (err){
-                  $('#result-uri').html('<p class="error">Something went wrong: '+err+'</p>');
-                  console.log('Error ' + err);
-
-                }else{
-
-                  // FIXME: handle errors
-                  console.log('Profile successfully pushed to provider ' + provRes.text);
-                  var profile = JSON.parse(provRes.text);
-                  postProfileToDirectory();
-
-                  $('#result-uri').html('<h1>Your profile lives here:</h1><h3>'+profile['@id']+'</h3><p>You can use this URI for listing it in the different <a href="https://github.com/hackers4peace/plp-docs">directories supporting PLP</a></p>');
-
-                }
-
-              });
-
-          }else if(provRes.ok) {
-
-            // FIXME: handle errors
-            console.log('Profile successfully pushed to provider ' + provRes.text);
-            var profile = JSON.parse(provRes.text);
-            postProfileToDirectory();
-
-            $('#result-uri').html('<h1>Your profile lives here:</h1><h3>'+profile['@id']+'</h3><p>You can use this URI for listing it in the different <a href="https://github.com/hackers4peace/plp-docs">directories supporting PLP</a></p>');
-
-          }
-
+        }else if(provRes.ok) {
+          postProfileToDirectory(JSON.parse(provRes.text));
         }
 
       });
 
+    }else{
+
+      superagent.post(window.plp.config.provider)
+      .type('application/ld+json')
+      .accept('application/ld+json')
+      .send(localStorage.profile)
+      .end(function(err,provRes){
+
+        if (err){
+          $('#result-uri').html('<p class="error">Something went wrong: '+err+'</p>');
+          console.log('Error ' + err);
+        }else if(provRes.ok) {
+          postProfileToDirectory(JSON.parse(provRes.text));
+        }
+
+      });
+
+    }
+
   });
 
-  function postProfileToDirectory(){
+  $('#step3Option2Btn').on('click',function() {
+
+    downloadLocallyStoredProfile();
+
+  });
+
+  // UTILITY FUNCTIONS
+
+  function downloadLocallyStoredProfile(){
+    var profile = localStorage.profile;
+    var filename = "urn:uuid"+uuid.v4();
+    var blob = new Blob([profile], {type: "application/ld+json;charset=utf-8"});
+    saveAs(blob, filename+".json");
+  }
+
+  function profileHasId(profile){
+    return _.has(profile,"@id");
+  }
+
+  function postProfileToDirectory(profile){
 
     if (window.plp.config.directory){
 
@@ -252,6 +255,7 @@ $(function(){
             }else if (dirRes.ok){
               console.log('Profile succesfully listed in directory ' + dirRes.text);
             }
+            $('#result-uri').html('<h1>Your profile lives here:</h1><h3>'+profile['@id']+'</h3><p>You can use this URI for listing it in the different <a href="https://github.com/hackers4peace/plp-docs">directories supporting PLP</a></p>');
           }
 
       });
@@ -259,17 +263,6 @@ $(function(){
     }
 
   }
-
-  $('#step3Option2Btn').on('click',function() {
-
-    var profile = localStorage.profile;
-    var filename = "urn:uuid"+uuid.v4();
-    var blob = new Blob([profile], {type: "application/ld+json;charset=utf-8"});
-    saveAs(blob, filename+".json");
-
-  });
-
-  // UTILITY FUNCTIONS
 
   function selectProfileType(profile){
 
