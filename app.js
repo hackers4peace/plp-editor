@@ -49,19 +49,10 @@ $(function(){
   }
 
   // TABS
-  $("#tabPerson").on('click',function() {
-    initEditor('Person');
-    selectProfileType("Person");
-  });
-
-  $("#tabOrganization").on('click',function() {
-    initEditor('Organization');
-    selectProfileType("Organization");
-  });
-
-  $("#tabPlace").on('click',function() {
-    initEditor('Place');
-    selectProfileType("Place");
+  $(".profileSelector ").on('click',function() {
+    var profileType = $(this).attr('profileType');
+    initEditor(profileType);
+    selectProfileType(profileType);
   });
 
   // STEP 1
@@ -210,15 +201,11 @@ $(function(){
                 .end(function(err,dirRes){
 
                   if (err){
-
                     console.log('Error ' + err);
-
                   }
 
                   if (dirRes.ok){
-
                     console.log('Profile succesfully listed in directory ' + dirRes.text);
-
                   }
 
               });
@@ -246,9 +233,8 @@ $(function(){
 
   function selectProfileType(profile){
 
-    $("#tabPerson").removeClass('active');
-    $("#tabOrganization").removeClass('active');
-    $("#tabPlace").removeClass('active');
+    $(".profileSelector").removeClass('active');
+
 
     $("#tab"+profile).addClass('active');
 
