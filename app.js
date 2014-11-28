@@ -49,19 +49,10 @@ $(function(){
   }
 
   // TABS
-  $("#tabPerson").on('click',function() {
-    initEditor('Person');
-    selectProfileType("Person");
-  });
-
-  $("#tabOrganization").on('click',function() {
-    initEditor('Organization');
-    selectProfileType("Organization");
-  });
-
-  $("#tabPlace").on('click',function() {
-    initEditor('Place');
-    selectProfileType("Place");
+  $(".profileSelector ").on('click',function() {
+    var profileType = $(this).attr('profileType');
+    initEditor(profileType);
+    selectProfileType(profileType);
   });
 
   // STEP 1
@@ -219,9 +210,7 @@ $(function(){
   });
 
   $('#step3Option2Btn').on('click',function() {
-
     downloadLocallyStoredProfile();
-
   });
 
   // UTILITY FUNCTIONS
@@ -273,9 +262,8 @@ $(function(){
 
   function selectProfileType(profile){
 
-    $("#tabPerson").removeClass('active');
-    $("#tabOrganization").removeClass('active');
-    $("#tabPlace").removeClass('active');
+    $(".profileSelector").removeClass('active');
+
 
     $("#tab"+profile).addClass('active');
 
