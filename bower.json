@@ -19,7 +19,8 @@
     "remotestorage": "~0.10.2",
     "FileSaver": "*",
     "Blob": "*",
-    "node-uuid": "~1.4.1"
+    "node-uuid": "~1.4.1",
+    "es6-promise": "~2.0.0"
   },
   "homepage": "https://github.com/elf-pavlik/plp-generator",
   "ignore": [
