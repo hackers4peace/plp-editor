@@ -169,12 +169,16 @@ $(function(){
 
   });
 
-  function publishToProvider(){
+  /**
+   * token - JWT authorization token
+   */
+  function publishToProvider(token){
     return new Promise(function(resolve, reject){
       superagent.post(window.plp.config.provider.url)
         .withCredentials()
         .type('application/ld+json')
         .accept('application/ld+json')
+        .set('Authorization', 'Bearer ' + token)
         .send(localStorage.profile)
         .end(function(err,provRes){
           if (err){
@@ -273,6 +277,9 @@ $(function(){
 
   var agent = {};
 
+  /**
+   * resolves with JWT token
+   */
   function login(endpoint, assertion){
     return new Promise(function(resolve, reject){
       superagent.post(endpoint)
@@ -283,7 +290,7 @@ $(function(){
           var data = response.body;
           console.log('Persona.onlogin() ' + endpoint, data);
           agent.persona = data;
-          resolve(data);
+          resolve(data.token);
         } else {
           console.log('error', response.error);
           reject();
