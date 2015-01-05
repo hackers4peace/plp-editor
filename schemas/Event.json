@@ -59,6 +59,19 @@
             "country": { "type" : "string", "title": "Country"}
           }
         }
+      },
+      "workPerformed": {
+        "type": "array",
+        "uniqueItems": true,
+        "title": "Projects participating",
+        "items": {
+          "type": "object",
+          "title": "Project",
+          "properties": {
+            "name": { "type" : "string", "title": "Project name"},
+            "url":  { "type" : "string", "title": "URL"}
+          }
+        }
       }
     }
   }

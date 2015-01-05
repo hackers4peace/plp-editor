@@ -45,7 +45,7 @@
           "type": "object",
           "title": "Contact",
           "properties": {
-            "type": {
+            "contactType": {
               "title": "Type",
               "type": "string",
               "enum": [
@@ -57,7 +57,7 @@
                 "Website"
               ]
             },
-            "id": {
+            "url": {
               "title": "URL",
               "type": "string"
             }
