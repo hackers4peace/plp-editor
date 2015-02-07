@@ -1,0 +1,39 @@
+{
+  "type": "object",
+  "title": "Organization",
+  "properties": {
+    "@type": { "type": "string", "default": "Organization", "options": {"hidden": true}},
+    "name": { "type": "string" , "title": "Name"},
+    "description": { "type": "string", "title": "About the organization"},
+    "telephone": { "type" : "string" , "title": "Phone number"},
+    "website":  { "type" : "string", "title": "Homepage"},
+    "logo": { "type": "string" , "title": "Logo URL"},
+    "address": {
+      "$ref": "schemas/basic_postaladdress.json"
+    },
+    "member": {
+      "type": "array",
+      "uniqueItems": true,
+      "title": "Members of the organization",
+      "items": {
+        "$ref": "schemas/basic_person.json"
+      }
+    },
+    "contactPoint": {
+      "type": "array",
+      "uniqueItems": true,
+      "title": "Contact",
+      "items":  {
+        "$ref": "schemas/basic_contactpoint.json"
+      }
+    },
+    "interest": {
+      "type": "array",
+      "uniqueItems": true,
+      "title": "Areas of interest",
+      "items":  {
+        "$ref": "schemas/basic_interest.json"
+      }
+    }
+  }
+}

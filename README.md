@@ -45,9 +45,6 @@ You need to serve it using some simple http server, for example
 $ python -m SimpleHTTPServer
 ```
 
-
-
-
 ## Unlicense
 
 This is free and unencumbered software released into the public domain.

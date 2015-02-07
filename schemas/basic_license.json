@@ -1,0 +1,9 @@
+{
+  "type": "object",
+  "title": "License",
+  "properties": {
+    "@type": { "type": "string", "default": "CreativeWork", "options": {"hidden": true}},
+    "name": { "type": "string", "title": "Name"},
+    "id": { "type": "string", "title": "URL"}
+  }
+}
