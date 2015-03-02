@@ -1,8 +1,7 @@
 {
   "type": "object",
   "title": "Interest",
-  "properties": {
-    "@type": { "type": "string", "default": "Interest", "options": {"hidden": true}},
+  "properties": {    
     "name": { "type": "string", "title": "Name"},
     "id": { "type": "string", "title": "URL"}
   }

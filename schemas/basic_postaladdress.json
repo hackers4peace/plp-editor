@@ -1,8 +1,7 @@
 {
   "type": "object",
   "title": "Address",
-  "properties": {
-    "@type": { "type": "string", "default": "PostalAddress", "options": {"hidden": true}},
+  "properties": {  
     "streetAddress": { "type": "string", "title": "Street"},
     "postalCode": { "type": "string", "title": "Zip code"},
     "addressLocality": { "type" : "string", "title": "City"},

@@ -2,7 +2,7 @@
   "type": "object",
   "title": "Project",
   "properties": {
-    "@type": { "type": "string", "default": "Project", "options": {"hidden": true}},
+    "type": { "type": "string", "default": "Project", "options": {"hidden": true}},
     "name": { "type": "string" , "title": "Name"},
     "description": { "type": "string", "title": "About"},
     "url":  { "type" : "string", "title": "Homepage"},
@@ -39,7 +39,7 @@
       "uniqueItems": true,
       "title": "Part of other projects",
       "items": {
-        "$ref": "schemas/basic_project.json"
+        "$ref": "schemas/_basic_project.json"
       }
     },
     "workExample": {
@@ -47,7 +47,7 @@
       "uniqueItems": true,
       "title": "See also",
       "items": {
-        "$ref": "schemas/basic_project.json"
+        "$ref": "schemas/_basic_project.json"
       }
     },
     "workPerformed": {
@@ -55,7 +55,7 @@
       "uniqueItems": true,
       "title": "Events the project participated in",
       "items": {
-        "$ref": "schemas/basic_event.json"
+        "$ref": "schemas/_basic_event.json"
       }
     }
   }

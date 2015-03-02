@@ -2,7 +2,7 @@
   "type": "object",
   "title": "Event",
   "properties": {
-    "@type": { "type": "string", "default": "Event", "options": {"hidden": true}},
+    "type": { "type": "string", "default": "Event", "options": {"hidden": true}},
     "name": { "type": "string" , "title": "Name"},
     "description": { "type": "string", "title": "About"},
     "url":  { "type" : "string", "title": "Homepage"},
@@ -22,7 +22,7 @@
       "uniqueItems": true,
       "title": "Performers",
       "items": {
-        "$ref": "schemas/basic_person.json"
+        "$ref": "schemas/_basic_person.json"
       }
     },
     "eventStatus" : {
@@ -40,7 +40,7 @@
       "uniqueItems": true,
       "title": "Locations",
       "items": {
-        "$ref": "schemas/basic_place.json"
+        "$ref": "schemas/_basic_place.json"
       }
     },
     "workPerformed": {
@@ -48,7 +48,7 @@
       "uniqueItems": true,
       "title": "Projects participating",
       "items": {
-        "$ref": "schemas/basic_project.json"
+        "$ref": "schemas/_basic_project.json"
       }
     }
   }

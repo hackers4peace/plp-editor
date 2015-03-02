@@ -2,7 +2,7 @@
   "type": "object",
   "title": "Person",
   "properties": {
-    "@type": { "type": "string", "default": "Person", "options": {"hidden": true}},
+    "type": { "type": "string", "default": "Person", "options": {"hidden": true}},
     "name": { "type": "string" , "title": "Name"},
     "description": { "type": "string", "title": "About yourself"},
     "birthDate":  { "type": "string" , "title": "Birth date"},
@@ -17,7 +17,7 @@
       "uniqueItems": true,
       "title": "Your companies, groups or organisations",
       "items": {
-        "$ref": "schemas/basic_organization.json"
+        "$ref": "schemas/_basic_organization.json"
       }
     },
     "sameAs": {

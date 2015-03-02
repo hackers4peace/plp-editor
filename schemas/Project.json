@@ -1,5 +1,5 @@
 {
   "schema" : {
-    "$ref": "schemas/basic_project.json"
+    "$ref": "schemas/_basic_project.json"
   }
 }

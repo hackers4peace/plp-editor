@@ -2,7 +2,7 @@
   "type": "object",
   "title": "Place",
   "properties": {
-    "@type": { "type": "string", "default": "Place", "options": {"hidden": true}},
+    "type": { "type": "string", "default": "Place", "options": {"hidden": true}},
     "name": { "type": "string" , "title": "Name"},
     "description": { "type": "string", "title": "About"},
     "telephone": { "type" : "string" , "title": "Phone number"},
@@ -16,7 +16,7 @@
       "uniqueItems": true,
       "title": "Events",
       "items": {
-        "$ref": "schemas/basic_event.json"
+        "$ref": "schemas/_basic_event.json"
       }
     }
   }

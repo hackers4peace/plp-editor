@@ -2,7 +2,7 @@
   "type": "object",
   "title": "Organization",
   "properties": {
-    "@type": { "type": "string", "default": "Organization", "options": {"hidden": true}},
+    "type": { "type": "string", "default": "Organization", "options": {"hidden": true}},
     "name": { "type": "string" , "title": "Name"},
     "description": { "type": "string", "title": "About the organization"},
     "telephone": { "type" : "string" , "title": "Phone number"},
@@ -16,7 +16,7 @@
       "uniqueItems": true,
       "title": "Members of the organization",
       "items": {
-        "$ref": "schemas/basic_person.json"
+        "$ref": "schemas/_basic_person.json"
       }
     },
     "sameAs": {

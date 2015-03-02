@@ -1,8 +1,7 @@
 {
   "type": "object",
   "title": "Contact",
-  "properties": {
-    "@type": { "type": "string", "default": "ContactPoint", "options": {"hidden": true}},
+  "properties": {    
     "name": { "type": "string", "title": "Type (twitter,github,email...)"},
     "id": { "type": "string", "title": "URL"}
   }
