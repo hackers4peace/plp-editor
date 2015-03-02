@@ -19,12 +19,12 @@
         "$ref": "schemas/basic_person.json"
       }
     },
-    "contactPoint": {
+    "sameAs": {
       "type": "array",
       "uniqueItems": true,
       "title": "Contact",
       "items":  {
-        "$ref": "schemas/basic_contactpoint.json"
+        "$ref": "schemas/basic_sameas.json"
       }
     },
     "interest": {

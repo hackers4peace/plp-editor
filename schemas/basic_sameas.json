@@ -1,0 +1,9 @@
+{
+  "type": "object",
+  "title": "Contact",
+  "properties": {
+    "@type": { "type": "string", "default": "sameAs", "options": {"hidden": true}},
+    "name": { "type": "string", "title": "Type (twitter,github,email...)"},
+    "id": { "type": "string", "title": "URL"}
+  }
+}

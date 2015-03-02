@@ -58,6 +58,5 @@
         "$ref": "schemas/basic_event.json"
       }
     }
-  },
-  "defaultProperties": ["name","description","url","image","version","license","copyrightHolder","contributor","discussionUrl","isPartOf","workExample","workPerformed"]
+  }
 }
