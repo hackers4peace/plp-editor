@@ -1,27 +1,14 @@
 # PLP App: Editor
 
-HTML5 app providing human interface to create and edit [Portable Linked
-Profiles](https://github.com/hackers4peace/plp-docs) + listing them in [PLP
-Directory](https://github.com/hackers4peace/plp-directory)
+This is a Native Web App providing a human interface to create and edit [Portable Linked
+Profiles](http://hackers4peace.viewdocs.io/plp-docs) for listing them in a [PLP
+Directory](http://hackers4peace.viewdocs.io/plp-docs/directory)
 
-## About
+## Documentation
 
-PLP Editors are apps which allows the user to create or update PLPs, and
-manage listings in Directories. For broader overview see [PLP
-Docs](https://github.com/hackers4peace/plp-docs)
+Please see the centralized PLP online documentation for further details:
 
-They interface with:
-
-* [PLP Provider](https://github.com/hackers4peace/plp-provider) - operations on profile itself
- * [ ] create
- * [ ] read
- * [ ] update
- * [ ] delete
-* [PLP Directory](https://github.com/hackers4peace/plp-directory) - operations on listings of profiles
- * [ ] create
- * [ ] read
- * [ ] update
- * [ ] delete
+> http://hackers4peace.viewdocs.io/plp-docs/directory
 
 ## Setup
 

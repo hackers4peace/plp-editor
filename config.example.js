@@ -1,6 +1,6 @@
 window.plp = {
   config: {
-    context: "http://plp.hackers4peace.net/context.jsonld",
+    context: "http://ld.hackers4peace.net/contexts/plp.jsonld",
     provider: {
       url: "http://localhost:5000",
       persona: {
