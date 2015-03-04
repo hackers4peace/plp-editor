@@ -12,10 +12,7 @@ $(function(){
 
   //Initialize the editor
   function initEditor(type,profile){
-
-    console.log(type);
-    console.log(profile);
-
+    
     profileType = type;
 
     $.getJSON('schemas/'+profileType+'.json', function(json){
