@@ -12,10 +12,10 @@ $(function(){
 
   //Initialize the editor
   function initEditor(type,profile){
-    
+
     profileType = type;
 
-    $.getJSON('schemas/'+profileType+'.json', function(json){
+    $.getJSON(window.plp.config.prototypesDir+profileType+'.json', function(json){
 
       document.getElementById('editor_holder').innerHTML = "";
       editor = new JSONEditor(document.getElementById('editor_holder'),json);
