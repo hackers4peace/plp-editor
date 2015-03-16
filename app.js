@@ -294,7 +294,7 @@ $(function(){
     var editorValue = editor.getValue();
     editorValue["@context"] = window.plp.config.context;
     editorValue["describedBy"] = {
-      "plp:prototypes": {
+      "plp:prototype": {
         "git:tag": window.plp.config.prototypesTag
       }
     }
