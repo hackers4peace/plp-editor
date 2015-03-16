@@ -1,6 +1,7 @@
 window.plp = {
   config: {
     prototypesDir: "plp-prototypes/",
+    prototypesTag: "v0.1.0",
     context: "http://plp.hackers4peace.net/context.jsonld",
     provider: {
       url: "http://localhost:5000",

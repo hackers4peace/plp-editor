@@ -293,6 +293,11 @@ $(function(){
 
     var editorValue = editor.getValue();
     editorValue["@context"] = window.plp.config.context;
+    editorValue["describedBy"] = {
+      "plp:prototype": {
+        "git:tag": window.plp.config.prototypesTag
+      }
+    }
 
     var profile = JSON.stringify(editorValue);
     window.localStorage.setItem('profile', profile);
